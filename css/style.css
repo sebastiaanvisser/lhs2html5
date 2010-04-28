@@ -1,0 +1,33 @@
+.slide
+{
+  background: #ccc;
+}
+
+.slide h1
+{
+  background: #000;
+  color: white;
+}
+
+.slide header .slidenumber,
+.slide footer
+{
+  background: #444;
+  color: white;
+}
+
+.slide .body em     { color: green; } 
+.slide .body em.em0 { color: blue;  }
+.slide .body em.em1 { color: red;   }
+
+.slide .body pre
+{
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.slide .body code
+{
+  background: rgba(255, 255, 255, 0.4);
+  color: red;
+}
+

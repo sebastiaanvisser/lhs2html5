@@ -1,0 +1,8 @@
+.Comment   { color: pink;  }
+.Symbol    { color: gray;   }
+.ConId     { color: blue;  }
+.VarId     { color: green; }
+.Keyword   { color: magenta; font-weight: bold; }
+.Function  { color: maroon;  font-weight: bold; }
+.String    { color: red;    }
+.Tag       { color: green;  }
