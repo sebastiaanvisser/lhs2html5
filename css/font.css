@@ -8,24 +8,19 @@
 .slide header .slidenumber,
 .slide footer
 {
-  font-family: "Myriad Pro";
+  font-family: "Alte Haas Grotesk";
   font-size: 26px;
 }
 
 .slide .body
 {
   font-size: 40px;
-  font-family: "Myriad Pro";
-}
-
-.slide .body p
-{
-  font-family: "Myriad Pro";
+  font-family: "Alte Haas Grotesk";
 }
 
 .slide .body pre
 {
-  font-family: Monaco;
+  xfont-family: Monaco;
   font-size: 30px;
 }
 
