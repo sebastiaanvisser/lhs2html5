@@ -1,33 +1,54 @@
+body
+{
+  background: black;
+}
+
+* { outline: none; }
+
 .slide
 {
-  background: #ccc;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#ccc));
+  -webkit-border-radius: 20px;
 }
 
 .slide h1
 {
-  background: #000;
-  color: white;
+  color: #505;
+  -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0.6)), to(rgba(0,0,0,1)));
+  text-shadow: 1px 1px 4px rgba(0,0,0, 1);
+  x-webkit-text-stroke: 2px rgba(255,255,255, 0.3);
 }
 
 .slide header .slidenumber,
 .slide footer
 {
-  background: #444;
-  color: white;
+  color: black;
 }
 
-.slide .body em     { color: green; } 
+.slide .body em
+{
+  color: #808;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+}
+
 .slide .body em.em0 { color: blue;  }
 .slide .body em.em1 { color: red;   }
 
 .slide .body pre
 {
-  background: rgba(255, 255, 255, 0.4);
+  background: white; /* -webkit-gradient(linear, 0% 0%, 0% 100%, from(#bbb), color-stop(0.4, #ddd), to(#ddd)); */
+  -webkit-border-radius: 20px;
+  -webkit-box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
 }
+
+.slide .body > div > *       { border: solid 4px rgba(0,0,0,0); }
+.slide .body > div > *:focus { border: solid 4px #c08;          }
 
 .slide .body code
 {
-  background: rgba(255, 255, 255, 0.4);
-  color: red;
+  background: white;
+  -webkit-border-radius: 8px;
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  color: #c08;
 }
 

@@ -14,7 +14,6 @@
 <!--
 
 > module Main where
-> import Data.List
 
 -->
 
@@ -23,38 +22,32 @@
 <div class=slide>
 
 <header>
-<h1>Rendezvous</h1>
+<h1>Annotated Fixed Point</h1>
 <div class=slidenumber></div>
 </header>
 
 <div class=body>
 
 <div>
-<p>A <em>Rendezvous</em> is used to connect a <em class=em0>client</em> to a <em class=em1>server</em>:</p>
+<p>We define an <em>annotated fixed point</em> combinator <code>FixA</code>:</p>
 <pre language=haskell>
 
-> data Rendezvous r
-> newRendezvous :: IO (Rendezvous r)
+> data FixA a f =
+>     InA { outa :: a f (FixA a f) }
+>   | InF { outf ::   f (FixA a f) }
 
 </pre>
 </div>
 
 <div>
-<p>Create a one endpoint with session <code>r</code>:</p>
+<p>And the <em>printer</em> function that takes a <code>b</code> to an <code>m b</code>:</p>
 <pre language=haskell>
 
-> accept :: Rendezvous r -> Session (Cap () r) () a -> IO a
->   where x of y && "20"
+> printer :: (MonadIO m, Show b) => String -> b -> m b
+> printer s f =
+>   do  liftIO (putStrLn (s ++ ": " ++ show f))
+>       return f
 
-</pre>
-</div>
-
-<div>
-<p>Connect the other endpoint with session <code>s</code> dual of <code>r</code>:</p>
-<pre language=xml>
-&lt;html>&lt;body class="aap">
-  asdahsd
-&lt;/body>&lt;/html>
 </pre>
 </div>
 
@@ -101,20 +94,30 @@ subtypes for client-server interactions. (1999)</p>
 </header>
 
 <div class=body>
+
+<div>
 <p>A <em>Rendezvous</em> is used to connect a <em class=em0>client</em> to a <em class=em1>server.</em></p>
 <pre language=haskell>
 data Rendezvous r
 newRendezvous :: IO (Rendezvous r)
 </pre>
+</div>
+
+<div>
 <p>Create a one endpoint with session <code>r</code>.</p>
 <pre language=haskell>
 accept :: Rendezvous r -> Session (Cap () r) () a -> IO a
 </pre>
+</div>
+
+<div>
 <p>Connect the other endpoint with session <code>s</code> dual of <code>r</code>.</p>
 <pre language=haskell>
 request :: Dual r s =>
   Rendezvous r -> Session (Cap () s) () a -> IO a
 </pre>
+</div>
+
 </div>
 
 <footer></footer>
@@ -134,9 +137,11 @@ request :: Dual r s =>
 $("footer").each
   (function ()
    {
-     var foot = "A Generic Approach to Datatype Persistentcy in Haskell - <strong>Sebastiaan Visser</strong>";
+     var foot = "A Generic Approach to Datatype Persistency in Haskell - <strong>Sebastiaan Visser</strong>";
      $(this).html(foot)
    })
+
+$(".slide .body > div > *").attr("contentEditable", "true")
 
 highlightCode()
 numberSlides()

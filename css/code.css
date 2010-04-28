@@ -1,8 +1,8 @@
-.Comment   { color: pink;  }
-.Symbol    { color: gray;   }
-.ConId     { color: blue;  }
-.VarId     { color: green; }
-.Keyword   { color: magenta; font-weight: bold; }
-.Function  { color: maroon;  font-weight: bold; }
-.String    { color: red;    }
+.Comment   { color: pink;   }
+.Symbol    { color: #888;   }
+.ConId     { color: #c08;   }
+.VarId     { color: #646;   }
+.Keyword   { color: #505; font-weight: bold; }
+.Function  { color: black;  }
+.String    { color: maroon; }
 .Tag       { color: green;  }
