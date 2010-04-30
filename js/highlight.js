@@ -17,7 +17,7 @@ function highlightCode ()
 
        jQuery.ajax
          ({ type: "PUT"
-          , url: "/highlight/" + node.attr("language")
+          , url: "highlight/" + node.attr("language")
           , data: node.text()
           , success: insert
           , dataType: "html"
