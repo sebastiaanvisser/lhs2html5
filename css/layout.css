@@ -6,27 +6,36 @@
 
 .slide
 {
-  display: none;
+  -webkit-transition: opacity  0.4s linear;
+
+  xdisplay: none;
   zoom: 1.00;
 
+  overflow: hidden;
   position: absolute;
-  left: 0px;
-  right: 0px;
-  top: 0px;
-  bottom: 0px;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+  bottom: 10px;
 }
 
 /* ----------------------------- */
 
 .slide h1
 {
-  padding: 10px 40px;
+  padding: 10px 20px;
 }
 
-.slide header .slidenumber,
+.slide header .slidenumber
+{
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
 .slide footer
 {
-  padding: 8px 20px;
+  padding: 10px 20px;
   text-align: right;
 }
 
@@ -42,17 +51,18 @@
 
 .slide .body
 {
-  padding: 40px 80px;
+  padding: 20px 20px;
+  xborder: solid 1px blue;
 }
 
 .slide .body > div
 {
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .slide .body > div > *
 {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .slide .body pre
@@ -64,6 +74,22 @@
 
 .slide .body code
 {
-  padding: 0 6px;
+  padding: 0 8px;
 }
+
+.slide .body ul,
+.slide .body ol
+{
+  padding: 15px;
+  margin-left: 60px;
+  margin-right: 20px;
+}
+
+.slide .body li
+{
+  margin-bottom: 10px;
+}
+
+.slide .body .vindent { margin-top:  80px; }
+.slide .body .hindent { margin-left: 80px; }
 

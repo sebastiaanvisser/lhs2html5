@@ -2,31 +2,40 @@
 {
   font-family: "Alte Haas Grotesk";
   font-weight: normal;
-  font-size: 80px;
+  font-size: 60px;
 }
 
-.slide header .slidenumber,
+.slide .slidenumber,
 .slide footer
 {
   font-family: "Alte Haas Grotesk";
-  font-size: 26px;
 }
+
+.slide .slidenumber { font-size: 25px; font-weight: bold; }
+.slide footer       { font-size: 20px; }
 
 .slide .body
 {
-  font-size: 40px;
+  font-size: 30px;
   font-family: "Alte Haas Grotesk";
 }
 
 .slide .body pre
 {
-  xfont-family: Monaco;
-  font-size: 30px;
+  font-family: Courier;
+  font-size: 25px;
 }
 
 .slide .body code
 {
-  font-family: Monaco;
-  font-size: 30px;
+  font-family: Courier;
 }
+
+.slide .body .large
+{
+  font-size: 40px;
+}
+
+.slide .body pre.large  { font-size: 35px; }
+.slide .body .large pre { font-size: 35px; }
 

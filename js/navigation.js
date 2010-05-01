@@ -38,5 +38,5 @@ function nextSlide ()
 
 function numberSlides ()
 {
-  $(".slide").each(function (i) { $(this).find("header .slidenumber").html("slide " + (i + 1) + " of " + numberOfSlides) })
+  $(".slide").each(function (i) { $(this).find("header .slidenumber").html((i + 1) + " of " + numberOfSlides) })
 }

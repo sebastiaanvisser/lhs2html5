@@ -17,6 +17,8 @@
 
 -->
 
+<div id=slides>
+
 <!-- ====================================================================== -->
 
 <div class=slide>
@@ -29,8 +31,8 @@
 <div class=body>
 
 <div>
-<p>We define an <em>annotated fixed point</em> combinator <code>FixA</code>:</p>
-<pre language=haskell>
+<p>We define an <strong>annotated fixed point</strong> combinator <code>FixA</code>:</p>
+<pre class=large language=haskell>
 
 > data FixA a f =
 >     InA { outa :: a f (FixA a f) }
@@ -40,7 +42,7 @@
 </div>
 
 <div>
-<p>And the <em>printer</em> function that takes a <code>b</code> to an <code>m b</code>:</p>
+<p>And the <strong>printer</strong> function that takes a <code>b</code> to an <code>m b</code>:</p>
 <pre language=haskell>
 
 > printer :: (MonadIO m, Show b) => String -> b -> m b
@@ -60,6 +62,33 @@
 
 <div class=slide>
 
+<header>
+<h1>Overview</h1>
+<div class=slidenumber></div>
+</header>
+
+<div class=body>
+
+<div class="hindent vindent large">
+<ol>
+<li>File based storage heap.</li>
+<li>Generic annotation framework.</li>
+<li>Persistent Haskell data structures.</li>
+</ol>
+</div>
+
+</div>
+
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+
+<header>
+<div class=slidenumber></div>
+</header>
+
 <div class=body>
 
 <div>
@@ -76,7 +105,7 @@
 </div>
 
 <div>
-<p>This notation has been introduced by Gay & Hole in their paper about Types and
+<p>this notation has been introduced by gay & hole in their paper about types and
 subtypes for client-server interactions. (1999)</p>
 </div>
 
@@ -96,7 +125,7 @@ subtypes for client-server interactions. (1999)</p>
 <div class=body>
 
 <div>
-<p>A <em>Rendezvous</em> is used to connect a <em class=em0>client</em> to a <em class=em1>server.</em></p>
+<p>A <strong>Rendezvous</strong> is used to connect a <em class=em0>client</em> to a <em class=em1>server.</em></p>
 <pre language=haskell>
 data Rendezvous r
 newRendezvous :: IO (Rendezvous r)
@@ -125,6 +154,8 @@ request :: Dual r s =>
 
 <!-- ====================================================================== -->
 
+</div>
+
 </body>
 
 <script src=js/navigation.js></script>
@@ -134,10 +165,12 @@ request :: Dual r s =>
 
 <script>
 
+window.resizeTo(1024, 768)
+
 $("footer").each
   (function ()
    {
-     var foot = "A Generic Approach to Datatype Persistency in Haskell - <strong>Sebastiaan Visser</strong>";
+     var foot = "<strong>A purely functional database in Haskell</strong> - Sebastiaan Visser";
      $(this).html(foot)
    })
 
@@ -146,6 +179,7 @@ $(".slide .body > div > *").attr("contentEditable", "true")
 highlightCode()
 numberSlides()
 installKeyBindings()
-firstSlide()
+currentSlide = 1 * (window.location.hash.slice(1) || 1) - 1
+showCurrentSlide()
 </script>
 
