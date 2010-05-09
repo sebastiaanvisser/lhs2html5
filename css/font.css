@@ -11,7 +11,7 @@
   font-family: "Alte Haas Grotesk";
 }
 
-.slide .slidenumber { font-size: 25px; font-weight: bold; }
+.slide .slidenumber { font-size: 25px; }
 .slide footer       { font-size: 20px; }
 
 .slide .body

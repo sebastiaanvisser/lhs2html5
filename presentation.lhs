@@ -14,6 +14,9 @@
 <!--
 
 > module Main where
+> import Data.Map (Map)
+> import Prelude hiding (lookup)
+> import qualified Data.Map as M
 
 -->
 
@@ -22,134 +25,116 @@
 <!-- ====================================================================== -->
 
 <div class=slide>
-
-<header>
-<h1>Annotated Fixed Point</h1>
-<div class=slidenumber></div>
-</header>
-
+<header><h1>Example, user database</h1><div class=slidenumber></div></header>
 <div class=body>
-
-<div>
-<p>We define an <strong>annotated fixed point</strong> combinator <code>FixA</code>:</p>
-<pre class=large language=haskell>
-
-> data FixA a f =
->     InA { outa :: a f (FixA a f) }
->   | InF { outf ::   f (FixA a f) }
-
-</pre>
+  <div class=vindent>
+  <p>User datatype containing email and password.</p>
+  <pre language=haskell>
+> type Email    = String
+> type Password = String
+> data User     = User
+>               { email    :: Email
+>               , password :: Password
+>               }
+  </pre>
+  </div>
+  <div>
+  <p>User database as mapping from email to user.</p>
+  <pre language=haskell>
+> type UserDB   = Map Email User
+  </pre>
+  </div>
+</div>
+<footer></footer>
 </div>
 
-<div>
-<p>And the <strong>printer</strong> function that takes a <code>b</code> to an <code>m b</code>:</p>
-<pre language=haskell>
-
-> printer :: (MonadIO m, Show b) => String -> b -> m b
-> printer s f =
->   do  liftIO (putStrLn (s ++ ": " ++ show f))
->       return f
-
-</pre>
+<div class=slide>
+<header><h1>Example, performing a signup</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Add a new user to a database, the email address must be unique.</p>
+  <pre language=haskell>
+> signup :: UserDB -> User -> Either String UserDB
+> signup db user = 
+>   let mail = email user in
+>   case M.lookup mail db of
+>     Nothing -> Right (M.insert mail user db)
+>     Just _  -> Left "email already taken"
+  </pre>
+  </div>
+</div>
+<footer></footer>
 </div>
 
+<div class=slide>
+<header><h1>Example, authenticate a user</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Does the database contain a user with the right email and password?</p>
+  <pre language=haskell>
+> authenticate :: UserDB -> User -> Bool
+> authenticate db user = 
+>   case M.lookup (email user) db of
+>     Just (User _ p) | p == password user = True
+>     _                                    = False
+  </pre>
+  </div>
+</div>
+<footer></footer>
 </div>
 
+<div class=slide>
+<header><h1>Example, web application</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div>
+  <p>Get post data out of web environment and try signup.</p>
+  <pre language=haskell>
+> signupHandler :: TVar UserDB -> Web String
+> signupHandler dbVar =
+>   do mail <- getPostVar "email"
+>      pass <- getPostVar "password"
+>
+>      atomically $
+>        do db <- readTVar dbVar
+>           case signup db (User mail pass) of
+>             Left      -> return "signup failed"
+>             Right db' -> do writeTVar dbVar db'
+>                             return "signup ok"
+  </pre>
+  </div>
+</div>
 <footer></footer>
 </div>
 
 <!-- ====================================================================== -->
 
 <div class=slide>
-
-<header>
-<h1>Overview</h1>
-<div class=slidenumber></div>
-</header>
-
+<header><h1>The problem</h1><div class=slidenumber></div></header>
 <div class=body>
-
-<div class="hindent vindent large">
-<ol>
-<li>File based storage heap.</li>
-<li>Generic annotation framework.</li>
-<li>Persistent Haskell data structures.</li>
-</ol>
+  <div class="large vindent hindent">
+  <p class=problem>When the programs terminates all data is lost.</p>
+  </div>
 </div>
-
 </div>
-
-</div>
-
-<!-- ====================================================================== -->
 
 <div class=slide>
-
-<header>
-<div class=slidenumber></div>
-</header>
-
+<header><h1>The heap layout</h1><div class=slidenumber></div></header>
 <div class=body>
-
-<div>
-<center>
-<table>
-<tr><td>send <code>τ</code> then <code>r</code>:</td><td>τ!r</td></tr>
-<tr><td>receive <code>τ</code> then <code>r</code>:</td><td>τ?r</td></tr>
-<tr><td>offer <code>r</code> and <code>s</code>:</td><td>r&s</td></tr>
-<tr><td>select <code>r</code> or <code>s</code>:</td><td>r+s</td></tr>
-<tr><td>close connection:</td><td>ε</td></tr>
-<tr><td>recursion on <code>r</code>:</td><td>μβ.r</td></tr>
-</table>
-</center>
+  <div>
+  <img style="margin-left:25px;margin-top:60px;"
+       src="http://localhost/uu/msc/thesis/heap.pdf">
+  </div>
 </div>
-
-<div>
-<p>this notation has been introduced by gay & hole in their paper about types and
-subtypes for client-server interactions. (1999)</p>
 </div>
-
-</div>
-
-</div>
-
-<!-- ====================================================================== -->
 
 <div class=slide>
-
-<header>
-<h1>nog meer interessants</h1>
-<div class=slidenumber></div>
-</header>
-
+<header><h1>The heap layout</h1><div class=slidenumber></div></header>
 <div class=body>
-
-<div>
-<p>A <strong>Rendezvous</strong> is used to connect a <em class=em0>client</em> to a <em class=em1>server.</em></p>
-<pre language=haskell>
-data Rendezvous r
-newRendezvous :: IO (Rendezvous r)
-</pre>
+  <div>
+  <img style="margin-left:25px;margin-top:60px;height:50%"
+       src="http://localhost/uu/msc/thesis/binarytree-ann.pdf">
+  </div>
 </div>
-
-<div>
-<p>Create a one endpoint with session <code>r</code>.</p>
-<pre language=haskell>
-accept :: Rendezvous r -> Session (Cap () r) () a -> IO a
-</pre>
-</div>
-
-<div>
-<p>Connect the other endpoint with session <code>s</code> dual of <code>r</code>.</p>
-<pre language=haskell>
-request :: Dual r s =>
-  Rendezvous r -> Session (Cap () s) () a -> IO a
-</pre>
-</div>
-
-</div>
-
-<footer></footer>
 </div>
 
 <!-- ====================================================================== -->
@@ -174,7 +159,7 @@ $("footer").each
      $(this).html(foot)
    })
 
-$(".slide .body > div > *").attr("contentEditable", "true")
+// $(".slide .body > div > *").attr("contentEditable", "true")
 
 highlightCode()
 numberSlides()
