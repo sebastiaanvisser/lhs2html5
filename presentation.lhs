@@ -147,6 +147,7 @@
 <script src=js/zoom.js></script>
 <script src=js/highlight.js></script>
 <script src=js/keybindings.js></script>
+<script src=js/bindings.js></script>
 
 <script>
 
@@ -164,6 +165,7 @@ $("footer").each
 highlightCode()
 numberSlides()
 installKeyBindings()
+installMouseBindings()
 currentSlide = 1 * (window.location.hash.slice(1) || 1) - 1
 showCurrentSlide()
 </script>
