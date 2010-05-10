@@ -51,27 +51,31 @@
 
 .slide .body
 {
-  padding: 20px 20px;
+  padding: 40px 20px;
   xborder: solid 1px blue;
 }
 
 .slide .body > div
 {
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .slide .body > div > *
 {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .slide .body pre
 {
-  padding: 15px;
   margin-left: 20px;
   margin-right: 20px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding: 10px 30px;
+  line-height: 32px;
+}
+
+.slide .body pre.signature
+{
+  margin-bottom: 2px;
 }
 
 .slide .body code
