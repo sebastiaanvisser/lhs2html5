@@ -10,6 +10,7 @@ function showCurrentSlide ()
 {
   hideAllSlides()
   $(".slide")[currentSlide].style.display = "block"
+  window.location.hash = (currentSlide + 1)
 }
 
 function firstSlide ()
@@ -40,3 +41,4 @@ function numberSlides ()
 {
   $(".slide").each(function (i) { $(this).find("header .slidenumber").html((i + 1) + " of " + numberOfSlides) })
 }
+
