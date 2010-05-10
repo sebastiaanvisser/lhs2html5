@@ -3,7 +3,12 @@ body
   background: black;
 }
 
-* { outline: none; }
+*
+{
+  outline: none;
+  -webkit-user-select: none;
+  cursor: none;
+}
 
 .slide
 {
