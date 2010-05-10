@@ -3,7 +3,6 @@ function installKeyBindings ()
   $(document).keydown
     (function (e)
      {
-       console.log(e.keyCode)
        switch (e.keyCode)
        {
          case 37: prevSlide()  ; break
@@ -41,4 +40,3 @@ function installMouseBindings ()
      })
 }
 
-installMouseBindings()
