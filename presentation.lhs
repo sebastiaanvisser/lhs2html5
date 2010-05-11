@@ -14,13 +14,10 @@
 <!--
 
 > module Presentation where
-> import Data.Map (Map)
-> import Prelude hiding (lookup)
-> import qualified Data.Map as M
-> import Control.Concurrent.STM
-> import Control.Monad.State
-> import Control.Monad.Reader
-> import System.IO
+
+> import Example ()
+> import Problem ()
+> import Heap    ()
 
 -->
 
