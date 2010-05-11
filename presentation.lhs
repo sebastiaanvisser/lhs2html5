@@ -18,6 +18,9 @@
 > import Prelude hiding (lookup)
 > import qualified Data.Map as M
 > import Control.Concurrent.STM
+> import Control.Monad.State
+> import Control.Monad.Reader
+> import System.IO
 
 -->
 
@@ -221,8 +224,17 @@
 <div class=slide>
 <header><h1>The problem</h1><div class=slidenumber></div></header>
 <div class=body>
-  <div class="large vindent hindent">
-  <p class=problem>When the programs terminates all data is lost.</p>
+  <div class="large vindent">
+  <p class="center problem">When the programs terminates all data is lost.</p>
+  </div>
+</div>
+</div>
+
+<div class=slide>
+<header><h1>The solution</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class="large vindent">
+  <p class="center solution">Save the data structure on disk.</p>
   </div>
 </div>
 </div>
@@ -240,6 +252,28 @@
 </div>
 </div>
 
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>File based storage heap</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div>
+  <p>Heap as a linear list of blocks of binary data.</p>
+  </div>
+  <div>
+  <p>A single block contains:</p>
+  <ul>
+    <li><code>1 byte</code> used/free flag.</li>
+    <li><code>4 byte</code> payload byte size.</li>
+    <li><code>n byte</code> payload as binary stream.</li>
+  </ul>
+  </div>
+  <div>
+  <p>Heap uses an in-memory map to perform allocation/freeing.</p>
+  </div>
+</div>
+</div>
+
 <div class=slide>
 <header><h1>The heap layout</h1><div class=slidenumber></div></header>
 <div class=body>
@@ -251,11 +285,47 @@
 </div>
 
 <div class=slide>
-<header><h1>The heap layout</h1><div class=slidenumber></div></header>
+<header><h1>File based storage heap</h1><div class=slidenumber></div></header>
 <div class=body>
-  <div>
-  <img style="margin-left:25px;margin-top:60px;height:50%"
-       src="http://localhost/uu/msc/thesis/binarytree-ann.pdf">
+  <div class="vindent">
+  <p>Heap as contiguous blocks of binary data.</p>
+  <pre language=haskell class=signature>
+
+> type    Offset    = Integer
+> type    Size      = Integer
+
+  </pre>
+  <pre language=haskell class=signature>
+
+> newtype Pointer a = Ptr Offset
+
+  </pre>
+  <pre language=haskell class=signature>
+
+> type    AllocMap  = Map Offset Size
+
+  </pre>
+  <pre language=haskell>
+
+> type    Heap a    = ReaderT Handle
+>                       (StateT AllocMap IO) a
+
+  </pre>
+  </div>
+</div>
+</div>
+
+<div class=slide>
+<header><h1>File based storage heap</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class="vindent">
+  <p>Basic operations:</p>
+  <pre language=haskell>
+allocate ::             Integer   -> Heap (Pointer a)
+free     ::             Pointer a -> Heap ()
+read     :: Binary a => Pointer a -> Heap a
+write    :: Binary a => a         -> Heap (Pointer a)
+  </pre>
   </div>
 </div>
 </div>
@@ -270,10 +340,9 @@
 <script src=js/zoom.js></script>
 <script src=js/highlight.js></script>
 <script src=js/bindings.js></script>
+<script src=js/symbols.js></script>
 
 <script>
-
-window.resizeTo(1024, 768)
 
 $("footer").each
   (function ()
@@ -287,8 +356,9 @@ $(".slide .body > div > *").attr("contentEditable", "true")
 highlightCode()
 numberSlides()
 installKeyBindings()
-installMouseBindings()
+// installMouseBindings()
 currentSlide = 1 * (window.location.hash.slice(1) || 1) - 1
 showCurrentSlide()
+replaceSymbols()
 </script>
 
