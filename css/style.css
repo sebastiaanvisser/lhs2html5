@@ -7,7 +7,7 @@ body
 {
   outline: none;
   -webkit-user-select: none;
-  cursor: none;
+  xcursor: none;
 }
 
 .slide
@@ -42,10 +42,9 @@ body
   text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
 }
 
-.slide .body .problem
-{
-  color: #a00;
-}
+.slide .body .problem  { color: #a00; }
+.slide .body .solution { color: #080; }
+.slide .body .center   { text-align: center; }
 
 .slide .body em.em0 { color: blue;  }
 .slide .body em.em1 { color: red;   }
