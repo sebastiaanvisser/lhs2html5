@@ -42,3 +42,7 @@ function numberSlides ()
   $(".slide").each(function (i) { $(this).find("header .slidenumber").html((i + 1) + " of " + numberOfSlides) })
 }
 
+function slideNumberFromHash ()
+{
+  currentSlide = 1 * (window.location.hash.slice(1) || 1) - 1
+}
