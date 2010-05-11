@@ -52,8 +52,8 @@ body
 .slide .body pre
 {
   background: white;
-  x-webkit-box-shadow: 2px 2px 10px rgba(0,0,0, 0.05);
-  x-webkit-border-radius: 4px;
+  -webkit-box-shadow: 2px 2px 10px rgba(0,0,0, 0.05);
+  x-webkit-border-radius: 8px;
 }
 
 .slide .body img

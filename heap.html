@@ -1,0 +1,92 @@
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>File based storage heap</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class="hindent vindent"
+  <p>Heap as a linear list of blocks of binary data.</p>
+  </div>
+  <div class=hindent>
+  <p>A single block contains:</p>
+  <ul>
+    <li><code>1 byte</code> used/free flag.</li>
+    <li><code>4 byte</code> payload byte size.</li>
+    <li><code>n byte</code> payload as binary stream.</li>
+  </ul>
+  </div>
+  <div class=hindent>
+  <p>Heap uses an in-memory map to perform allocation/freeing.</p>
+  </div>
+</div>
+</div>
+
+<div class=slide>
+<header><h1>The heap layout</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div>
+  <img style="margin-left:25px;margin-top:60px;"
+       src="http://localhost/uu/msc/thesis/heap.pdf">
+  </div>
+</div>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>File datatypes</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class="vindent">
+  <p>A <code>Pointer</code> as byte offset into file.</p>
+  <pre language=haskell class=signature>
+
+> type Offset = Integer
+> type Size   = Integer
+
+  </pre>
+  <pre language=haskell>
+
+> newtype Pointer a = Ptr Offset
+
+  </pre>
+  </div>
+  <div>
+  <p>The <code>Heap</code> context that stores file handle and allocation map.</p>
+  <pre language=haskell class=signature>
+
+> type AllocMap = Map Offset Size
+
+  </pre>
+  <pre language=haskell>
+
+> type Heap a = ReaderT Handle (StateT AllocMap IO) a
+
+  </pre>
+  </div>
+</div>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>File based storage heap</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class="vindent">
+  <p>Basic operations:</p>
+  <pre language=haskell class=signature>
+allocate ::             Integer   -> Heap (Pointer a)
+  </pre>
+  <pre language=haskell class=signature>
+free     ::             Pointer a -> Heap ()
+  </pre>
+  <pre language=haskell class=signature>
+read     :: Binary a => Pointer a -> Heap a
+  </pre>
+  <pre language=haskell class=signature>
+write    :: Binary a => a         -> Heap (Pointer a)
+  </pre>
+  </div>
+</div>
+</div>
+
+<!-- ====================================================================== -->
+
