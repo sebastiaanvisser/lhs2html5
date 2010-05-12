@@ -107,15 +107,14 @@
   <p>Haskell's <code>Data.Map</code> is implemented as a size balanced binary tree.</p>
   </div>
   <div>
-  <p>A simplified binary tree:</p>
+  <p>A simplified binary tree, without key:</p>
   <pre language=haskell>
 
-> data Tree k v =
+> data Tree v =
 >     Leaf
->   | Branch { key   :: k
->            , value :: v
->            , left  :: Tree k v
->            , right :: Tree k v
+>   | Branch { value :: v
+>            , left  :: Tree v
+>            , right :: Tree v
 >            }
 
   </pre>
@@ -132,17 +131,17 @@
   <div class=vindent>
   <pre language=haskell class=signature>
 
-> insert :: Ord k => k -> v -> Tree k v -> Tree k v
+> insert :: Ord v => v -> Tree v -> Tree v
 
   </pre>
   <pre language=haskell>
 
-> insert k v (Branch m w l r) =
->   case k `compare` m of
->             LT -> Branch m w (insert k v l) r
->             EQ -> Branch k v l r
->             GT -> Branch m w l (insert k v r)
-> insert k v Leaf = Branch k v Leaf Leaf
+> insert v (Branch w l r) =
+>   case v `compare` w of
+>           LT -> Branch w (insert v l) r
+>           EQ -> Branch v l r
+>           GT -> Branch w l (insert v r)
+> insert v Leaf = Branch v Leaf Leaf
 
   </pre>
   </div>
@@ -158,13 +157,13 @@
   <div class=vindent>
   <pre language=haskell class=signature>
 
-> lookup :: Ord k => k -> Tree k v -> Maybe v
+> lookup :: Ord k => k -> Tree (k, v) -> Maybe v
 
   </pre>
   <pre language=haskell>
 
-> lookup k (Branch m v l r) =
->   case k `compare` m of
+> lookup k (Branch (w, v) l r) =
+>   case k `compare` w of
 >           LT -> lookup k l
 >           EQ -> Just v
 >           GT -> lookup k r

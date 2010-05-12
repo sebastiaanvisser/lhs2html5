@@ -26,6 +26,7 @@
   <!--#include virtual="example.html"   -->
   <!--#include virtual="problem.html"   -->
   <!--#include virtual="heap.html"      -->
+  <!--#include virtual="generics.html"  -->
 </div>
 
 </body>
@@ -37,6 +38,15 @@
 <script src=js/symbols.js></script>
 
 <script>
+$("footer").each
+  (function ()
+   {
+     var foot = "<strong>A purely functional database in Haskell</strong> - Sebastiaan Visser";
+     $(this).html(foot)
+   })
+</script>
+
+<script>
 highlightCode()
 numberSlides()
 installKeyBindings()
@@ -44,14 +54,5 @@ installMouseBindings()
 slideNumberFromHash()
 showCurrentSlide()
 replaceSymbols()
-</script>
-
-<script>
-$("footer").each
-  (function ()
-   {
-     var foot = "<strong>A purely functional database in Haskell</strong> - Sebastiaan Visser";
-     $(this).html(foot)
-   })
 </script>
 

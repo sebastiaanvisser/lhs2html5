@@ -1,0 +1,336 @@
+<!--
+
+> {-# LANGUAGE
+>     MultiParamTypeClasses
+>   , FlexibleInstances
+>   , FlexibleContexts
+>   , UndecidableInstances
+>   , DeriveFunctor
+>   , DeriveFoldable
+>   , DeriveTraversable
+>   #-}
+> module Generics where
+
+> import Data.Foldable
+> import Data.Traversable
+> import Control.Monad
+
+-->
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Fixed point combinator</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Type level fixed point combinator.</p>
+  <pre language=haskell>
+
+> newtype Fix f = In { out :: f (Fix f) }
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Original Tree definition</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Recall original <code>Tree v</code> datatype.</p>
+  <pre language=haskell>
+data Tree v = Leaf | Branch v (Tree v) (Tree v)
+  </pre>
+  </div>
+  <div>
+  <p>Example tree:</p>
+  <pre language=haskell>
+myTree :: Tree Int
+myTree =
+  Branch 3 (Branch 1 Leaf Leaf)
+           (Branch 4 Leaf (Branch 7 Leaf Leaf))
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<div class=slide>
+<div class=body>
+  <div>
+  <center>
+  <img class=long src=http://localhost/uu/msc/thesis/binarytree.pdf>
+  </center>
+  </div>
+</div>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Open recursive definition</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Parametrized with additional type variable for recursive position.</p>
+  <pre language=haskell>
+
+> data TreeF v f = Leaf | Branch v f f
+>   deriving (Functor, Foldable, Traversable) -- ghc-6.12
+
+  </pre>
+  </div>
+  <div>
+  <p>Fixed point combinator can be used to tie the knot.</p>
+  <pre language=haskell>
+
+> type Tree v = Fix (TreeF v)
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Pointer type</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div>
+  <p>Smart constructors.</p>
+  <pre language=haskell class=signature>
+
+> leaf :: Tree v  -- Tree v ≡ Fix (TreeF v)
+> leaf = In Leaf
+
+  </pre><pre language=haskell>
+
+> branch :: v -> Tree v -> Tree v -> Tree v
+> branch v l r = In (Branch v l r)
+
+  </pre>
+  </div>
+  <div>
+  <p>Example tree.</p>
+  <pre language=haskell>
+
+> myTree :: Tree Int
+> myTree =
+>   branch 3 (branch 1 leaf leaf)
+>            (branch 4 leaf (branch 7 leaf leaf))
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<div class=slide>
+<div class=body>
+  <div>
+  <center>
+  <img class=tall src=http://localhost/uu/msc/thesis/binarytree-fix.pdf>
+  </center>
+  </div>
+</div>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Annotated fixed point combinator</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Annotated fixed point stores additional annotation variable.</p>
+  <pre language=haskell class=large>
+
+> newtype FixA a f =
+>   InA { outa :: a f (FixA a f) }
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<div class=slide>
+<header><h1>Annotatation type classes</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Unwrap a single node from annotation.</p>
+  <pre language=haskell>
+
+> class Monad m => AnnOut a f m where
+>   annOut :: FixA a f -> m (f (FixA a f))
+
+  </pre>
+  </div>
+  <div>
+  <p>Wrap a single node in a fresh annotation.</p>
+  <pre language=haskell>
+
+> class Monad m => AnnIn a f m where
+>   annIn :: f (FixA a f) -> m (FixA a f)
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<div class=slide>
+<header><h1>Annotatation type classes</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Modify a node inside an annotation.</p>
+  <pre language=haskell class=signature>
+
+> class (AnnOut a f m, AnnIn a f m) => AnnIO a f m where
+>   annIO :: (f (FixA a f) -> m (f (FixA a f)))
+>         -> FixA a f      -> m (FixA a f)
+
+  </pre>
+  </div>
+  <div>
+  <p>Default implementation performs unwrap/wrap:</p>
+  <pre language=haskell>
+
+>   annIO f = annIn <=< f <=< annOut
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Debug trace annotation</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class="vindent large">
+  <pre language=haskell>
+
+> newtype Debug f a = D (f a)
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Debug trace annotation</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Annotation instances.</p>
+  <pre language=haskell>
+
+> instance (Functor f, Show (f ()))
+>       => AnnOut Debug f IO where
+>   annOut (InA (D f)) = print (unit f) >> return f
+
+  </pre><pre language=haskell>
+
+> instance (Functor f, Show (f ()))
+>       => AnnIn Debug f IO where
+>   annIn f = print (unit f) >> return (InA (D f))
+
+  </pre><pre language=haskell class=helper>
+
+> unit :: Functor f => f a -> f ()
+> unit = fmap (const ())
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Debug trace annotation</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Annotation instances.</p>
+  <pre language=haskell>
+
+> instance (Functor f, Show (f ())) => AnnIO Debug f IO
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Smart constructors</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div>
+  <p>Annotated tree.</p>
+  <pre language=haskell>
+
+> type TreeA a v = FixA a (TreeF v)
+
+  </pre>
+  </div>
+  <div>
+  <p>Smart constructors.</p>
+  <pre language=haskell>
+
+> leafA :: AnnIn a (TreeF v) m => m (TreeA a v)
+> leafA = annIn Leaf
+
+  </pre><pre language=haskell class=signature>
+
+> branchA :: AnnIn a (TreeF v) m
+>         => v -> TreeA a v -> TreeA a v -> m (TreeA a v)
+> branchA v l r = annIn (Branch v l r)
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Annotated binary tree</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Smart constructors.</p>
+  <pre language=haskell>
+
+> myTreeA :: AnnIn a (TreeF Int) m => m (TreeA a Int)
+> myTreeA =
+>   do l <- leafA
+>      d <- branchA 7 l l
+>      e <- branchA 1 l l
+>      f <- branchA 4 d l
+>      branchA 3 e f
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<div class=slide>
+<div class=body>
+  <div>
+  <center>
+  <img class=tall src=http://localhost/uu/msc/thesis/binarytree-ann.pdf>
+  </center>
+  </div>
+</div>
+</div>
+

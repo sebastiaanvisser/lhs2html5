@@ -28,7 +28,16 @@ function installKeyBindings ()
 
 function installMouseBindings ()
 {
+  if (document.location.search.match(/nomouse/)) return
+
+  // Disable context menu.
   $(document).bind("contextmenu",function() { return false })
+
+  // Make stuff unselectable and hide cursor.
+  $("*").css("-webkit-user-select", "none");
+  $("*").css("cursor", "none");
+
+  // Navigate forward on left mouse button, backward on right mouse button.
   $(".slide").mousedown
     (function (e)
      {

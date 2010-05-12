@@ -17,37 +17,24 @@ function zoomReset ()
 
 function autoZoom ()
 {
-  var resolutionZoomMap =
-    [ [0,    0,    0.00]
-    , [320,  240,  0.31]
-    , [640,  480,  0.62]
-    , [800,  600,  0.78]
-    , [1024, 786,  1.00]
-    , [1280, 1024, 1.23]
-    , [2048, 1152, 1.40]
-    ]
+  var r = 1024
+  var ratio = 768/r
+  var w = window.innerWidth
+  var h = window.innerHeight
+  var w1 = w, h1 = h
 
-  var w = window.outerWidth
-  var h = window.outerHeight
-  var d = w/h
+  if (h/w > ratio)
+    h1 = ratio * w
+  else
+    w1 = h / ratio
 
-  var i = 0;
-  for (i = 0; i < resolutionZoomMap.length; i++)
-    if (w < resolutionZoomMap[i][0])
-      break
+  $(".slide").css("width",  w1           + 'px')
+  $(".slide").css("height", h1           + 'px')
+  $(".slide").css("left",   (w/2 - w1/2) + "px")
+  $(".slide").css("top",    (h/2 - h1/2) + "px")
 
-  var from = resolutionZoomMap[i - 1]
-  var to   = resolutionZoomMap[i    ]
-
-  console.log(w, h, "->", from, to)
-
-  var dW = to[0] - from[0]
-  var dZ = to[2] - from[2]
-
-  var xW = (w-from[0])/dW
-  var zoom = from[2]+(xW*dZ)
-
-  $(".slide").css("zoom", zoom)
+  var zoom = w1/1024
+  $(".slide > *").css("zoom", zoom)
 }
       
 function documentResizer ()

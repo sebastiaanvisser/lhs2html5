@@ -14,9 +14,9 @@
   overflow: hidden;
   position: absolute;
   left: 0px;
-  right: 0px;
+  width: 1024px;
   top: 0px;
-  bottom: 0px;
+  height: 768px;
 }
 
 /* ----------------------------- */
@@ -66,6 +66,25 @@
   margin-bottom: 20px;
 }
 
+.slide .body img.tall
+{
+  height: 90%;
+  width: auto;
+}
+
+.slide .body img.long
+{
+  width: 99%;
+  height: auto;
+}
+
+.slide .body pre.large,
+.slide .body .large pre
+{
+  xpadding: 20px 30px;
+  line-height: 52px;
+}
+
 .slide .body pre
 {
   margin-left: 20px;
@@ -76,7 +95,7 @@
 
 .slide .body pre.signature
 {
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 
 .slide .body code
