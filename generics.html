@@ -8,6 +8,7 @@
 >   , DeriveFunctor
 >   , DeriveFoldable
 >   , DeriveTraversable
+>   , KindSignatures
 >   #-}
 > module Generics where
 
@@ -16,23 +17,6 @@
 > import Control.Monad
 
 -->
-
-<!-- ====================================================================== -->
-
-<div class=slide>
-<header><h1>Fixed point combinator</h1><div class=slidenumber></div></header>
-<div class=body>
-  <div class=vindent>
-  <p>Type level fixed point combinator.</p>
-  <pre language=haskell>
-
-> newtype Fix f = In { out :: f (Fix f) }
-
-  </pre>
-  </div>
-</div>
-<footer></footer>
-</div>
 
 <!-- ====================================================================== -->
 
@@ -71,6 +55,26 @@ myTree =
 <!-- ====================================================================== -->
 
 <div class=slide>
+<header><h1>Fixed point combinator</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Type level fixed point combinator.</p>
+  <pre language=haskell>
+
+> newtype Fix (f :: * -> *) = In { out :: f (Fix f) }
+
+  </pre>
+  </div>
+  <div>
+  <p>The fixed point combinator is sometimes called <code class=large>μ</code>.</p>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
 <header><h1>Open recursive definition</h1><div class=slidenumber></div></header>
 <div class=body>
   <div class=vindent>
@@ -78,7 +82,9 @@ myTree =
   <pre language=haskell>
 
 > data TreeF v f = Leaf | Branch v f f
->   deriving (Functor, Foldable, Traversable) -- ghc-6.12
+>   deriving ( Eq, Ord, Show
+>            , Functor, Foldable, Traversable -- ghc-6.12
+>            )
 
   </pre>
   </div>
@@ -97,7 +103,7 @@ myTree =
 <!-- ====================================================================== -->
 
 <div class=slide>
-<header><h1>Pointer type</h1><div class=slidenumber></div></header>
+<header><h1>Smart constructors</h1><div class=slidenumber></div></header>
 <div class=body>
   <div>
   <p>Smart constructors.</p>
@@ -147,7 +153,7 @@ myTree =
   <p>Annotated fixed point stores additional annotation variable.</p>
   <pre language=haskell class=large>
 
-> newtype FixA a f =
+> data FixA a f =
 >   InA { outa :: a f (FixA a f) }
 
   </pre>
@@ -155,6 +161,13 @@ myTree =
 </div>
 <footer></footer>
 </div>
+
+<!--
+
+> instance Show (a v (FixA a v)) => Show (FixA a v) where
+>   show (InA f) = "{" ++ show f ++ "}"
+
+-->
 
 <div class=slide>
 <header><h1>Annotatation type classes</h1><div class=slidenumber></div></header>
@@ -222,6 +235,12 @@ myTree =
 <footer></footer>
 </div>
 
+<!--
+
+>   deriving Show
+
+-->
+
 <!-- ====================================================================== -->
 
 <div class=slide>
@@ -233,13 +252,13 @@ myTree =
 
 > instance (Functor f, Show (f ()))
 >       => AnnOut Debug f IO where
->   annOut (InA (D f)) = print (unit f) >> return f
+>   annOut (InA (D f)) = print ("Out", unit f) >> return f
 
   </pre><pre language=haskell>
 
 > instance (Functor f, Show (f ()))
 >       => AnnIn Debug f IO where
->   annIn f = print (unit f) >> return (InA (D f))
+>   annIn f = print ("In", unit f) >> return (InA (D f))
 
   </pre><pre language=haskell class=helper>
 
@@ -332,5 +351,32 @@ myTree =
   </center>
   </div>
 </div>
+</div>
+
+<div class=slide>
+<header><h1>Annotated binary tree</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div>
+  <p>Smart constructors.</p>
+  <pre language=haskell>
+
+> myTreeD :: IO (TreeA Debug Int)
+> myTreeD = myTreeA
+
+  </pre>
+  </div>
+  <div>
+  <pre>
+<strong>ghci></strong> myTreeD
+("In",Leaf)
+("In",Branch 7 () ())
+("In",Branch 1 () ())
+("In",Branch 4 () ())
+("In",Branch 3 () ())
+{D (Branch 3 {D (Branch 1 {D Leaf} <span style=color:red>...</span>
+  </pre>
+  </div>
+</div>
+<footer></footer>
 </div>
 
