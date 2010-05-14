@@ -38,7 +38,7 @@ function installMouseBindings ()
   $("*").css("cursor", "none");
 
   // Navigate forward on left mouse button, backward on right mouse button.
-  $(".slide").mousedown
+  $("body").mousedown
     (function (e)
      {
        switch (e.which)

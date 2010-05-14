@@ -1,0 +1,235 @@
+<!--
+
+> {-# LANGUAGE
+>     MultiParamTypeClasses
+>   , FlexibleInstances
+>   , FlexibleContexts
+>   , UndecidableInstances
+>   , DeriveFunctor
+>   , DeriveFoldable
+>   , DeriveTraversable
+>   , KindSignatures
+>   , RankNTypes
+>   #-}
+> module Morphisms where
+
+  import Data.Foldable
+  import Data.Traversable
+  import Control.Monad
+
+> import Prelude hiding (mapM)
+> import Data.Traversable
+> import Control.Monad hiding (mapM)
+> import Generics
+
+-->
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Abstraction away from recursion</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p class="center problem">Writing operations on annotated structures is hard.</p>
+  <p class="center problem">Touching the recursive positions requires wrapping/unwrapping.</p>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<div class=slide>
+<header><h1>Algebraic operations</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p class="center solution">We will abstract away from recursion using <strong>morphisms</strong>.</p>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Apomorphism</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Coalgebra type for apomorphism.</p>
+  <pre language=haskell>
+
+> type CoalgA a s f = s -> f (Either s (FixA a f))
+> type Coalg    s f = forall a. CoalgA a s f
+
+  </pre>
+
+  <div>
+  </div>
+  <p>Coalgebra can be interpreted by apomorphism.</p>
+  <pre language=haskell>
+
+> apoA :: (AnnIn a f m, Traversable f)
+>      => CoalgA a s f -> s -> m (FixA a f)
+> apoA coalg =
+>   annIn <=< mapM (apoA coalg `either` return) . coalg
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Binary tree from list.</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <pre language=haskell class=signature>
+
+> fromListCoalg :: Coalg [v] (TreeF v)
+
+  </pre><pre language=haskell>
+
+> fromListCoalg []     = Leaf
+> fromListCoalg (y:ys) =
+>   let l = take (length ys `div` 2) ys
+>       r = drop (length l         ) ys
+>   in Branch y (Left l) (Left r) -- actually anamorphism
+
+  </pre><pre language=haskell>
+
+> fromListA
+>   :: AnnIn a (TreeF v) m
+>   => [v] -> m (TreeA a v)
+> fromListA = apoA fromListCoalg
+
+  </pre>
+  </div>
+
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <pre language=haskell>
+
+> squares :: IO (TreeA Debug (Int, Int))
+> squares = fromListA [(1,1),(2,4),(3,9)]
+
+  </pre><pre>
+ghci> squares
+("In",Leaf)
+("In",Leaf)
+("In",Branch (2,4) () ())
+("In",Leaf)
+("In",Leaf)
+("In",Branch (3,9) () ())
+("In",Branch (1,1) () ())
+<span style=color:#080>{D (Branch (1,1) {D (Branch (2,4) {D Leaf} {D Leaf})}
+                 {D (Branch (3,9) {D Leaf} {D Leaf})})}</span></pre>
+  </div>
+
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Paramorphism</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Algebra type for paramorphism.</p>
+  <pre language=haskell>
+
+> type AlgA a f r = f (FixA a f, r) -> r
+> type Alg    f r = forall a. AlgA a f r
+
+  </pre>
+
+  <div>
+  </div>
+  <p>Algebra can be interpreted by paramorphim.</p>
+  <pre language=haskell>
+
+> paraA :: (Functor m, AnnOut a f m, Traversable f)
+>       => AlgA a f r -> FixA a f -> m r
+> paraA alg = return . alg
+>         <=< mapM (group (paraA alg))
+>         <=< annOut
+>   where group f c = fmap ((, ) c) (f c)
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Lookup on binary tree</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <pre language=haskell class=signature>
+
+> lookupAlg :: Ord k => k -> Alg (TreeF (k, v)) (Maybe v)
+
+  </pre><pre language=haskell>
+
+> lookupAlg k (Branch (w, v) l r) =
+>   case k `compare` w of
+>              LT -> snd l       -- only uses snd...
+>              EQ -> Just v
+>              GT -> snd r       -- ...so actually a catamorphism
+> lookupAlg _ Leaf = Nothing
+
+  </pre><pre language=haskell class=signature>
+
+> lookupA
+>   :: (Ord k, Functor m, AnnOut a (TreeF (k, v)) m)
+>   => k -> TreeA a (k, v) -> m (Maybe v)
+
+  </pre><pre language=haskell>
+
+> lookupA k = paraA (lookupAlg k)
+
+  </pre>
+  </div>
+
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<div class=body>
+  <div class=vindent>
+  <pre>
+<strong>ghci></strong> squares >>= lookupA 3
+("In",Leaf)
+("In",Leaf)
+("In",Branch (2,4) () ())
+("In",Leaf)
+("In",Leaf)
+("In",Branch (3,9) () ())
+("In",Branch (1,1) () ())
+("Out",Branch (1,1) () ())
+("Out",Branch (2,4) () ())
+("Out",Leaf)
+("Out",Leaf)
+("Out",Branch (3,9) () ())
+("Out",Leaf)
+("Out",Leaf)
+<span style=color:#080>Just 9</span></pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+
