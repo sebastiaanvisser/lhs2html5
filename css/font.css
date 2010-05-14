@@ -5,6 +5,11 @@
   font-size: 60px;
 }
 
+.slide.chapter h1
+{
+  font-size: 100px;
+}
+
 .slide .slidenumber,
 .slide footer
 {

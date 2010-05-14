@@ -26,6 +26,12 @@
   padding: 10px 20px;
 }
 
+.slide.chapter h1
+{
+  padding: 220px 20px;
+  text-align: center;
+}
+
 .slide header .slidenumber
 {
   position: absolute;
