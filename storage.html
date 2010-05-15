@@ -29,7 +29,7 @@
 <!-- ====================================================================== -->
 
 <div class="slide chapter">
-<header><h1>Persistent Datastructures</h1></header>
+<header><h1>Persistent Data Structures</h1></header>
 </div>
 
 <!-- ====================================================================== -->
@@ -73,19 +73,31 @@
   <div class=vindent>
   <pre language=haskell>
 
-> type PTree k   = TreeA P k
+> type PersistentTree k = FixA P (TreeF k)
 
   </pre>
   </div>
   <div>
+  <p>Build a tree on disk.</p>
   <pre language=haskell class=signature>
 
-> fromListP :: [v] -> Heap (PTree v)
-> fromListP = fromListA
+> fromListP :: [v] -> Heap (PersistentTree v)
 
   </pre><pre language=haskell>
 
-> lookupP :: Ord k => k -> PTree (k, v) -> Heap (Maybe v)
+> fromListP = fromListA
+
+  </pre>
+  </div>
+  <div>
+  <p>Lookup value from tree on disk.</p>
+  <pre language=haskell class=signature>
+
+> lookupP :: Ord k => k
+>         -> PersistentTree (k, v) -> Heap (Maybe v)
+
+  </pre><pre language=haskell>
+
 > lookupP = lookupA
 
   </pre>
@@ -149,7 +161,6 @@
 >        num <- Prelude.read <$> liftIO getLine
 >        sqr <- fetchRootPtr >>= lookupP num  -- actual lookup
 >        liftIO $ print ( num :: Int
->                       , "->"
 >                       , sqr :: Maybe Int
 >                       )
 
@@ -186,11 +197,11 @@ squares.db
 ...
 <em>$ lookup-squares</em>
 Give a number&gt; 3
-(3, "->", Just 9)
+(3, Just 9)
 Give a number&gt; 9
-(9, "->", Just 81)
+(9, Just 81)
 Give a number&gt; 12
-(12, "->", Nothing)
+(12, Nothing)
 ^C
 <em>$ _</em></pre>
   </div>
