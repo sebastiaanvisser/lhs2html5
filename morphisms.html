@@ -13,10 +13,6 @@
 >   #-}
 > module Morphisms where
 
-  import Data.Foldable
-  import Data.Traversable
-  import Control.Monad
-
 > import Prelude hiding (mapM)
 > import Data.Traversable
 > import Control.Monad hiding (mapM)
@@ -130,7 +126,7 @@
   <div class=vindent>
   <pre language=haskell class=signature>
 
-> squares :: IO (TreeA Debug (Int, Int))
+> squares :: IO (TreeA D (Int, Int))
 
   </pre><pre language=haskell>
 

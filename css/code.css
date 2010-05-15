@@ -1,9 +1,9 @@
 .Comment   { color: #48f; font-family: "Palatino"; font-size: 28px; font-style: italic; float: right; }
-.Symbol    { color: #a00;  }
-.ConId     { color: #00a;  }
+.Symbol    { color: #a00; }
+.ConId     { color: #00a; }
 .VarId     { color: black; }
 .Keyword   { color: black; font-weight: bold; }
-.Function  { color: #444;  }
+.Function  { color: #444; }
 .String    { color: #080; }
 .Number    { color: #080; }
 .Tag       { color: black; }

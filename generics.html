@@ -12,6 +12,7 @@
 >   #-}
 > module Generics where
 
+> import Data.Binary
 > import Data.Foldable
 > import Data.Traversable
 > import Control.Monad
@@ -105,6 +106,14 @@ myTree =
 </div>
 <footer></footer>
 </div>
+
+<!--
+
+> instance Binary (TreeF k v) where
+>   get = undefined
+>   put = undefined
+
+-->
 
 <!-- ====================================================================== -->
 
@@ -233,7 +242,7 @@ myTree =
   <div class="vindent large">
   <pre language=haskell>
 
-> newtype Debug f a = D (f a)
+> newtype D f a = D (f a)
 
   </pre>
   </div>
@@ -257,13 +266,13 @@ myTree =
   <pre language=haskell>
 
 > instance (Functor f, Show (f ()))
->       => AnnOut Debug f IO where
+>       => AnnOut D f IO where
 >   annOut (InA (D f)) = print ("Out", unit f) >> return f
 
   </pre><pre language=haskell>
 
 > instance (Functor f, Show (f ()))
->       => AnnIn Debug f IO where
+>       => AnnIn D f IO where
 >   annIn f = print ("In", unit f) >> return (InA (D f))
 
   </pre><pre language=haskell class=helper>
@@ -286,7 +295,7 @@ myTree =
   <p>Annotation instances.</p>
   <pre language=haskell>
 
-> instance (Functor f, Show (f ())) => AnnIO Debug f IO
+> instance (Functor f, Show (f ())) => AnnIO D f IO
 
   </pre>
   </div>
@@ -366,7 +375,7 @@ myTree =
   <p>Smart constructors.</p>
   <pre language=haskell>
 
-> myTreeD :: IO (TreeA Debug Int)
+> myTreeD :: IO (TreeA D Int)
 > myTreeD = myTreeA
 
   </pre>

@@ -10,7 +10,7 @@ body
 
 .slide
 {
-  background: #eee; 
+  background: #eee;
   -webkit-border-radius: 5px;
   overflow: hidden;
 }
@@ -48,6 +48,11 @@ body
   -webkit-box-shadow: 2px 2px 10px rgba(0,0,0, 0.15);
   -webkit-border-radius: 5px;
   x-webkit-border-top-right-radius: 30px;
+}
+
+.slide .body pre em
+{
+  color: green;
 }
 
 .slide .body .helper

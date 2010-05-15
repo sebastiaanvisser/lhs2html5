@@ -8,6 +8,7 @@
 > import Control.Monad.Reader
 > import Control.Monad.State
 > import Data.Map (Map)
+> import Data.Binary (Binary)
 > import Prelude hiding (lookup)
 > import System.IO
 > import qualified Data.Map as M
@@ -99,6 +100,7 @@
 
 >   deriving
 >     ( Functor, Monad
+>     , MonadIO
 >     , MonadReader Handle
 >     , MonadState  (Size, AllocMap)
 >     )
@@ -119,18 +121,37 @@
   <div class="vindent">
   <p>Basic operations:</p>
   <pre language=haskell class=signature>
-read     :: Binary a => Pointer a -> Heap a
+
+> read     :: Binary a => Pointer a -> Heap a
+
   </pre><pre language=haskell class=signature>
-write    :: Binary a => a         -> Heap (Pointer a)
+
+> write    :: Binary a => a         -> Heap (Pointer a)
+
   </pre><pre language=haskell class=signature>
 allocate ::             Integer   -> Heap (Pointer a)
-  </pre><pre language=haskell class=signature>
-free     ::             Pointer a -> Heap ()
+  </pre><pre language=haskell>
+
+> free     ::             Pointer a -> Heap ()
+
+  </pre><pre language=haskell>
+
+> run      :: FilePath -> Heap a    -> IO ()
+
   </pre>
   </div>
 </div>
 <footer></footer>
 </div>
+
+<!--
+
+> read = undefined
+> write = undefined
+> free = undefined
+> run = undefined
+
+-->
 
 <!-- ====================================================================== -->
 
