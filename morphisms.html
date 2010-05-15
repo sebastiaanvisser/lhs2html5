@@ -33,7 +33,7 @@
 <!-- ====================================================================== -->
 
 <div class=slide>
-<header><h1>Abstraction away from recursion</h1><div class=slidenumber></div></header>
+<header><h1>Abstracting away from recursion</h1><div class=slidenumber></div></header>
 <div class=body>
   <div class=vindent>
   <p class="center problem">Writing operations on annotated structures is hard.</p>
@@ -56,26 +56,29 @@
 <!-- ====================================================================== -->
 
 <div class=slide>
-<header><h1>Apomorphism</h1><div class=slidenumber></div></header>
+<header><h1>Anamorphism</h1><div class=slidenumber></div></header>
 <div class=body>
+  <div>
+  <p class=center>Like Haskell's <code>unfold</code>.</p>
+  </div>
   <div class=vindent>
-  <p>Coalgebra type for apomorphism.</p>
+  <p>Coalgebra type:</p>
   <pre language=haskell>
 
-> type CoalgA a s f = s -> f (Either s (FixA a f))
-> type Coalg    s f = forall a. CoalgA a s f
+> type Coalg s f = s -> f s
 
   </pre>
-
-  <div>
   </div>
-  <p>Coalgebra can be interpreted by apomorphism.</p>
-  <pre language=haskell>
+  <div>
+  <p>Corecursive anamorphic traversal:</p>
+  <pre language=haskell class=signature>
 
-> apoA :: (AnnIn a f m, Traversable f)
->      => CoalgA a s f -> s -> m (FixA a f)
-> apoA coalg =
->   annIn <=< mapM (apoA coalg `either` return) . coalg
+> anaA :: (AnnIn a f m, Traversable f)
+>      => Coalg s f -> s -> m (FixA a f)
+
+  </pre><pre language=haskell>
+
+> anaA coalg = annIn <=< mapM (anaA coalg) . coalg
 
   </pre>
   </div>
@@ -99,14 +102,18 @@
 > fromListCoalg (y:ys) =
 >   let l = take (length ys `div` 2) ys
 >       r = drop (length l         ) ys
->   in Branch y (Left l) (Left r) -- actually anamorphism
+>   in Branch y l r
+
+  </pre>
+  </div>
+  <div>
+  <pre language=haskell class=signature>
+
+> fromListA :: AnnIn a (TreeF v) m => [v] -> m (TreeA a v)
 
   </pre><pre language=haskell>
 
-> fromListA
->   :: AnnIn a (TreeF v) m
->   => [v] -> m (TreeA a v)
-> fromListA = apoA fromListCoalg
+> fromListA = anaA fromListCoalg
 
   </pre>
   </div>
@@ -121,13 +128,16 @@
 <header><div class=slidenumber></div></header>
 <div class=body>
   <div class=vindent>
-  <pre language=haskell>
+  <pre language=haskell class=signature>
 
 > squares :: IO (TreeA Debug (Int, Int))
+
+  </pre><pre language=haskell>
+
 > squares = fromListA [(1,1),(2,4),(3,9)]
 
   </pre><pre>
-ghci> squares
+<strong>ghci></strong> squares
 ("In",Leaf)
 ("In",Leaf)
 ("In",Branch (2,4) () ())
@@ -146,28 +156,29 @@ ghci> squares
 <!-- ====================================================================== -->
 
 <div class=slide>
-<header><h1>Paramorphism</h1><div class=slidenumber></div></header>
+<header><h1>Catamorphism</h1><div class=slidenumber></div></header>
 <div class=body>
+  <div>
+  <p class=center>Like Haskell's <code>fold</code>.</p>
+  </div>
   <div class=vindent>
-  <p>Algebra type for paramorphism.</p>
+  <p>Algebra type:</p>
   <pre language=haskell>
 
-> type AlgA a f r = f (FixA a f, r) -> r
-> type Alg    f r = forall a. AlgA a f r
+> type Alg f r = f r -> r
 
   </pre>
-
-  <div>
   </div>
-  <p>Algebra can be interpreted by paramorphim.</p>
-  <pre language=haskell>
+  <div>
+  <p>Recursive catamorphic traversal:</p>
+  <pre language=haskell class=signature>
 
-> paraA :: (Functor m, AnnOut a f m, Traversable f)
->       => AlgA a f r -> FixA a f -> m r
-> paraA alg = return . alg
->         <=< mapM (group (paraA alg))
->         <=< annOut
->   where group f c = fmap ((, ) c) (f c)
+> cataA :: (Functor m, AnnOut a f m, Traversable f)
+>       => Alg f r -> FixA a f -> m r
+
+  </pre><pre language=haskell>
+
+> cataA alg = return . alg <=< mapM (cataA alg) <=< annOut
 
   </pre>
   </div>
@@ -189,20 +200,22 @@ ghci> squares
 
 > lookupAlg k (Branch (w, v) l r) =
 >   case k `compare` w of
->              LT -> snd l       -- only uses snd...
+>              LT -> l
 >              EQ -> Just v
->              GT -> snd r       -- ...so actually a catamorphism
+>              GT -> r
 > lookupAlg _ Leaf = Nothing
 
-  </pre><pre language=haskell class=signature>
+  </pre>
+  </div>
+  <div>
+  <pre language=haskell class=signature>
 
-> lookupA
->   :: (Ord k, Functor m, AnnOut a (TreeF (k, v)) m)
->   => k -> TreeA a (k, v) -> m (Maybe v)
+> lookupA :: (Ord k, Functor m, AnnOut a (TreeF (k, v)) m)
+>         => k -> TreeA a (k, v) -> m (Maybe v)
 
   </pre><pre language=haskell>
 
-> lookupA k = paraA (lookupAlg k)
+> lookupA k = cataA (lookupAlg k)
 
   </pre>
   </div>
