@@ -64,7 +64,7 @@
 .slide .body > div
 {
   margin-bottom: 40px;
-  xborder: solid 1px red;
+  xborder: solid 1px #ddd;
 }
 
 .slide .body > div > *
@@ -101,7 +101,7 @@
 
 .slide .body pre.signature
 {
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .slide .body code

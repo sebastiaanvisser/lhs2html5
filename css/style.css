@@ -10,14 +10,14 @@ body
 
 .slide
 {
-  background: #eee;
-  x-webkit-border-radius: 20px;
+  background: #eee; 
+  -webkit-border-radius: 5px;
   overflow: hidden;
 }
 
 .slide h1
 {
-  color: #403;
+  color: #504;
 }
 
 .slide header .slidenumber
@@ -35,24 +35,18 @@ body
 
 /* ----------------------------- */
 
-.slide .body em
-{
-  color: #808;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-}
-
 .slide .body .problem  { color: #a00; }
 .slide .body .solution { color: #070; }
 .slide .body .center   { text-align: center; }
 
-.slide .body em.em0 { color: blue;  }
-.slide .body em.em1 { color: red;   }
+.slide .body em.em0 { color: #a00;  }
+.slide .body em.em1 { color: #00a;   }
 
 .slide .body pre
 {
   background: white;
   -webkit-box-shadow: 2px 2px 10px rgba(0,0,0, 0.15);
-  x-webkit-border-radius: 30px;
+  -webkit-border-radius: 5px;
   x-webkit-border-top-right-radius: 30px;
 }
 
