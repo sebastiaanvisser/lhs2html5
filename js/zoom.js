@@ -37,11 +37,9 @@ function autoZoom ()
   $(".slide > *").css("zoom", zoom)
 }
       
-function documentResizer ()
+function setupResizing ()
 {
   $(window).resize(autoZoom)
   autoZoom()
 }
 
-documentResizer()
-  autoZoom()

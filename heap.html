@@ -45,15 +45,13 @@
 </div>
 
 <div class=slide>
-<header><h1>The heap layout</h1><div class=slidenumber></div></header>
 <div class=body>
-  <div>
+  <div class=vindent>
   <center>
   <img class=long src="http://localhost/uu/msc/thesis/heap.pdf">
   </center>
   </div>
 </div>
-<footer></footer>
 </div>
 
 <!-- ====================================================================== -->
@@ -134,7 +132,11 @@ allocate ::             Integer   -> Heap (Pointer a)
 
 > free     ::             Pointer a -> Heap ()
 
-  </pre><pre language=haskell>
+  </pre>
+  </div>
+  <div>
+  <p>Running a heap computation.</p>
+  <pre language=haskell>
 
 > run      :: FilePath -> Heap a    -> IO ()
 

@@ -8,56 +8,38 @@
 <link rel=stylesheet href=css/style.css type=text/css media=screen>
 <link rel=stylesheet href=css/code.css type=text/css media=screen>
 <script type=text/javascript src=3rd/jquery-1.4.2.js></script>
-
-<body>
-
-<!--
-
-> module Presentation where
-
-> import Example ()
-> import Problem ()
-> import Heap    ()
-
--->
-
-
-<div id=slides>
-  <!--#include virtual=" titlepage.html" -->
-  <!--#include virtual=" example.html"   -->
-  <!--#include virtual=" problem.html"   -->
-  <!--#include virtual=" heap.html"      -->
-  <!--#include virtual=" generics.html"  -->
-  <!--#include virtual=" morphisms.html" -->
-  <!--#include virtual="storage.html"   -->
-</div>
-
--->
-
-</body>
-
 <script src=js/navigation.js></script>
 <script src=js/zoom.js></script>
 <script src=js/highlight.js></script>
 <script src=js/bindings.js></script>
 <script src=js/symbols.js></script>
 
+<body>
+
+<div id=slides>
+  <div id=titlepage class=section> <!--#include virtual="titlepage.html" --> </div>
+  <div id=example   class=section> <!--#include virtual="example.html"   --> </div>
+  <div id=problem   class=section> <!--#include virtual="problem.html"   --> </div>
+  <div id=heap      class=section> <!--#include virtual="heap.html"      --> </div>
+  <div id=generics  class=section> <!--#include virtual="generics.html"  --> </div>
+  <div id=morphisms class=section> <!--#include virtual="morphisms.html" --> </div>
+  <div id=storage   class=section> <!--#include virtual="storage.html"   --> </div>
+</div>
+
+</body>
+
 <script>
-$("footer").each
-  (function ()
-   {
-     var foot = "<strong>A purely functional database in Haskell</strong> - Sebastiaan Visser";
-     $(this).html(foot)
-   })
+$("footer").each(function () { $(this).html("<strong>A functional database in Haskell</strong> - Sebastiaan Visser"); })
 </script>
 
 <script>
-highlightCode()
-numberSlides()
-installKeyBindings()
-installMouseBindings()
+setupNavigation()
+setupResizing()
+setupHighlighting()
+setupSymbolReplacement()
+setupKeyBindings()
+setupMouseBindings()
+setupSlideNumbering()
 slideNumberFromHash()
-showCurrentSlide()
-replaceSymbols()
 </script>
 

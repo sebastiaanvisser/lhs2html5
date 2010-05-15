@@ -1,4 +1,4 @@
-function highlightCode ()
+function setupHighlighting ()
 {
   $("pre[language]").each
     (function ()

@@ -1,4 +1,4 @@
-function installKeyBindings ()
+function setupKeyBindings ()
 {
   $(document).keydown
     (function (e)
@@ -26,7 +26,7 @@ function installKeyBindings ()
      })
 }
 
-function installMouseBindings ()
+function setupMouseBindings ()
 {
   if (document.location.search.match(/nomouse/)) return
 

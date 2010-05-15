@@ -10,7 +10,7 @@ body
 
 .slide
 {
-  background: #eee;
+  background: #e0e0e0;
   -webkit-border-radius: 5px;
   overflow: hidden;
 }
@@ -45,8 +45,8 @@ body
 .slide .body pre
 {
   background: white;
-  -webkit-box-shadow: 2px 2px 10px rgba(0,0,0, 0.15);
-  -webkit-border-radius: 5px;
+  -webkit-box-shadow: 1px 1px 10px rgba(0,0,0, 0.15);
+  -webkit-border-radius: 2px;
   x-webkit-border-top-right-radius: 30px;
 }
 
@@ -57,7 +57,7 @@ body
 
 .slide .body .helper
 {
-  background: #eee;
+  background: #f4f4f4;
 }
 
 .slide .body img

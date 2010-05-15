@@ -1,4 +1,4 @@
-function replaceSymbols ()
+function setupSymbolReplacement ()
 {
   $(".Symbol").each(
     function (e)
