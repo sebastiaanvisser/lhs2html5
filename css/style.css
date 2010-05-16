@@ -7,7 +7,6 @@ body, html
 *
 {
   outline: none;
-  -webkit-transition: 1s opacity;
 }
 
 .slide
@@ -28,12 +27,17 @@ body, html
   color: #888;
   top: 10px;
   right: 10px;
+  -webkit-transition: 1s opacity;
 }
 
 .slide footer
 {
   color: black;
   opacity: 0.5;
+}
+
+.slide.titlepage img
+{
 }
 
 /* ----------------------------- */

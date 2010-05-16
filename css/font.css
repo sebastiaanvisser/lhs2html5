@@ -42,6 +42,7 @@
   font-size: 25px;
 }
 
+.slide .body tt,
 .slide .body code
 {
   font-family: Courier;
