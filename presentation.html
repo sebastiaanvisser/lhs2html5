@@ -29,10 +29,17 @@
 </body>
 
 <script>
-$("footer").each(function () { if (!$(this).html()) $(this).html("<strong>A functional database in Haskell</strong> - Sebastiaan Visser"); })
+$("footer").each(
+  function ()
+  {
+    if (!$(this).html())
+      $(this).html("Persistent Data Structures in Haskell - Sebastiaan Visser");
+  }
+)
 </script>
 
 <script>
+var resolution = [1024,766]
 setupNavigation()
 setupResizing()
 setupHighlighting()

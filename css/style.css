@@ -1,6 +1,7 @@
 body, html
 {
-  background: black;
+  xbackground: black;
+  background: #eee;
 }
 
 *
@@ -11,7 +12,8 @@ body, html
 .slide
 {
   background: #e0e0e0;
-  -webkit-border-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
   overflow: hidden;
 }
 

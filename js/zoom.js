@@ -17,8 +17,7 @@ function zoomReset ()
 
 function autoZoom ()
 {
-  var r = 1024
-  var ratio = 768/r
+  var ratio = resolution[1]/resolution[0]
   var w = window.innerWidth
   var h = window.innerHeight
   var w1 = w, h1 = h
@@ -33,7 +32,7 @@ function autoZoom ()
   $(".slide").css("left",   (w/2 - w1/2) + "px")
   $(".slide").css("top",    (h/2 - h1/2) + "px")
 
-  var zoom = w1/1024
+  var zoom = w1/resolution[0]
   $(".slide > *").css("zoom", zoom)
 }
       
