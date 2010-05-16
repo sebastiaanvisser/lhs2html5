@@ -209,31 +209,6 @@ myTree =
 <footer></footer>
 </div>
 
-<div class=slide>
-<header><h1>Annotatation type classes</h1><div class=slidenumber></div></header>
-<div class=body>
-  <div class=vindent>
-  <p>Modify a node inside an annotation.</p>
-  <pre language=haskell class=signature>
-
-> class (AnnOut a f m, AnnIn a f m) => AnnIO a f m where
->   annIO :: (f (FixA a f) -> m (f (FixA a f)))
->         -> FixA a f      -> m (FixA a f)
-
-  </pre>
-  </div>
-  <div>
-  <p>Default implementation performs unwrap/wrap:</p>
-  <pre language=haskell>
-
->   annIO f = annIn <=< f <=< annOut
-
-  </pre>
-  </div>
-</div>
-<footer></footer>
-</div>
-
 <!-- ====================================================================== -->
 
 <div class=slide>
@@ -279,23 +254,6 @@ myTree =
 
 > unit :: Functor f => f a -> f ()
 > unit = fmap (const ())
-
-  </pre>
-  </div>
-</div>
-<footer></footer>
-</div>
-
-<!-- ====================================================================== -->
-
-<div class=slide>
-<header><h1>Debug trace annotation</h1><div class=slidenumber></div></header>
-<div class=body>
-  <div class=vindent>
-  <p>Annotation instances.</p>
-  <pre language=haskell>
-
-> instance (Functor f, Show (f ())) => AnnIO D f IO
 
   </pre>
   </div>

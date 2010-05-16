@@ -7,6 +7,7 @@ body, html
 *
 {
   outline: none;
+  -webkit-transition: 1s opacity;
 }
 
 .slide
