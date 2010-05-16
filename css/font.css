@@ -10,6 +10,17 @@
   font-size: 100px;
 }
 
+.slide.titlepage h1
+{
+  font-size: 80px;
+}
+
+.slide.titlepage .author
+{
+  font-family: "Alte Haas Grotesk";
+  font-size: 30px;
+}
+
 .slide .slidenumber,
 .slide footer
 {

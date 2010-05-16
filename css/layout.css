@@ -7,6 +7,8 @@
 .slide
 {
   -webkit-transition: opacity  0.4s linear;
+  page-break-before: always;
+  page-break-after:  always;
 
   xdisplay: none;
   zoom: 1.00;
@@ -32,11 +34,22 @@
   text-align: center;
 }
 
+.slide.titlepage h1
+{
+  padding: 120px 20px 20px 20px;
+  text-align: center;
+}
+
+.slide.titlepage .author
+{
+  text-align: center;
+}
+
 .slide header .slidenumber
 {
-  position: absolute;
-  right: 20px;
-  top: 20px;
+  margin-right: 20px;
+  margin-top: -50px;
+  float: right;
 }
 
 .slide footer

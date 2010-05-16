@@ -3,10 +3,10 @@
 <title>A Generic Approach to Datatype Persistency in Haskell</title>
 <meta http-equiv=Content-Type content=text/html;charset=utf-8>
 <meta charset=utf-8>
-<link rel=stylesheet href=css/layout.css type=text/css media=screen>
-<link rel=stylesheet href=css/font.css type=text/css media=screen>
-<link rel=stylesheet href=css/style.css type=text/css media=screen>
-<link rel=stylesheet href=css/code.css type=text/css media=screen>
+<link rel=stylesheet href=css/layout.css type=text/css media=all>
+<link rel=stylesheet href=css/font.css   type=text/css media=all>
+<link rel=stylesheet href=css/style.css  type=text/css media=all>
+<link rel=stylesheet href=css/code.css   type=text/css media=all>
 <script type=text/javascript src=3rd/jquery-1.4.2.js></script>
 <script src=js/navigation.js></script>
 <script src=js/zoom.js></script>
@@ -29,7 +29,7 @@
 </body>
 
 <script>
-$("footer").each(function () { $(this).html("<strong>A functional database in Haskell</strong> - Sebastiaan Visser"); })
+$("footer").each(function () { if (!$(this).html()) $(this).html("<strong>A functional database in Haskell</strong> - Sebastiaan Visser"); })
 </script>
 
 <script>
