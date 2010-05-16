@@ -48,11 +48,22 @@ body, html
 
 .slide .body em.em0 { color: #a00;  }
 .slide .body em.em1 { color: #00a;   }
+.slide .body em.mild { color: #888;   }
+
+.slide .body dd { padding-left: 20px; margin-bottom: 40px; }
+
+.slide .body li { margin-bottom: 20px; }
+
+.slide .body a
+{
+  color: #24a;
+  text-decoration: none;
+}
 
 .slide .body pre
 {
   background: white;
-  -webkit-box-shadow: 1px 1px 10px rgba(0,0,0, 0.15);
+  -webkit-box-shadow: 1px 1px 10px rgba(0,0,0, 0.1);
   -webkit-border-radius: 2px;
   x-webkit-border-top-right-radius: 30px;
 }

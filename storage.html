@@ -125,14 +125,15 @@
 <header><h1>Creating square database</h1><div class=slidenumber></div></header>
 <div class=body>
   <div class=vindent>
+  <p><code>BuildSquareDB.hs</code></p>
   <pre language=haskell class=signature>
 
-> buildSquaresDB :: IO ()
+> main :: IO ()
 
   </pre>
   <pre language=haskell>
 
-> buildSquaresDB =
+> main =
 >   do run "squares.db" $
 >        do p <- fromListP (map (\a -> (a, a*a)) [1..10])
 >           storeRootPtr (p :: FixA P (TreeF (Int, Int)))
@@ -159,17 +160,18 @@
 <!-- ====================================================================== -->
 
 <div class=slide>
-<header><h1>Persistent binary tree</h1><div class=slidenumber></div></header>
+<header><h1>Looking up squares</h1><div class=slidenumber></div></header>
 <div class=body>
   <div class=vindent>
+  <p><code>LookupSquares.hs</code></p>
   <pre language=haskell class=signature>
 
-> lookupSquares :: IO ()
+> main' :: IO ()
 
   </pre>
   <pre language=haskell>
 
-> lookupSquares =
+> main' =
 >   run "squares.db" $ forever $
 >     do liftIO $ putStr "Give a number> "
 >        num <- Prelude.read <$> liftIO getLine
@@ -200,9 +202,13 @@
 
 <div class=slide>
 <div class=body>
-  <div class=vindent>
+  <div>
   <pre class=signature>
-<em>$ build-square-db</em>
+<em>$ ghc --make BuildSquareDB.hs -o build-squares-db</em>
+...
+<em>$ ghc --make LookupSquares.hs -o lookup-squares</em>
+...
+<em>$ ./build-square-db</em>
 Database created.
 <em>$ ls *.db</em>
 squares.db
@@ -210,7 +216,7 @@ squares.db
 0000000 54 68 69 73 20 69 73 20 6a 75 73 74 20 61 20 66
 0000010 61 6b 65 20 65 78 61 6d 70 6c 65 21 21 21 21 0a
 ...
-<em>$ lookup-squares</em>
+<em>$ ./lookup-squares</em>
 Give a number&gt; 3
 (3, Just 9)
 Give a number&gt; 9
@@ -222,5 +228,6 @@ Give a number&gt; 12
   </div>
 
 </div>
+<footer></footer>
 </div>
 
