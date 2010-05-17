@@ -78,7 +78,8 @@ body, html
 
 .slide .body .helper
 {
-  background: #f4f4f4;
+  background: #eeeeee;
+  -webkit-box-shadow: none;
 }
 
 .slide .body img

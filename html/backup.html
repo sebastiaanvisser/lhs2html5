@@ -1,3 +1,121 @@
+<!--
+
+> {-# LANGUAGE
+>     MultiParamTypeClasses
+>   , FlexibleInstances
+>   , FlexibleContexts
+>   , UndecidableInstances
+>   , ScopedTypeVariables
+>   , DeriveFunctor
+>   , DeriveFoldable
+>   , DeriveTraversable
+>   , KindSignatures
+>   , RankNTypes
+>   #-}
+> module Backup where
+
+> import Data.Traversable
+> import Control.Applicative
+> import Control.Monad hiding (mapM)
+> import Control.Monad.State hiding (mapM)
+> import Prelude hiding (read, mapM)
+> import Data.Binary hiding (get)
+> import Heap
+> import Generics
+> import Storage
+> import qualified Data.Map as M
+
+-->
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Modification</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div>
+  <p>Modify a node inside an annotation.</p>
+  <pre language=haskell class=signature>
+
+> class (AnnOut a f m, AnnIn a f m) => AnnIO a f m where
+>   annIO :: (f (FixA a f) -> m (f (FixA a f)))
+>         -> FixA a f      -> m (FixA a f)
+
+  </pre>
+  </div>
+  <div>
+  <p>Default implementation performs unwrap/wrap:</p>
+  <pre language=haskell>
+
+>   annIO f = annIn <=< f <=< annOut
+
+  </pre>
+  </div>
+  <div>
+  <p>Pointer instance.</p>
+  <pre language=haskell class=signature>
+
+> instance Binary (f (FixA P f)) => AnnIO P f Heap
+>    where annIO g (InA (P f)) =
+>                InA . P <$> (write =<< g =<< fetch f)
+
+  </pre>
+  <pre language=haskell class=helper>
+
+> fetch :: Binary a => Pointer a -> Heap a
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!--
+
+> fetch = undefined
+
+-->
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Endomorphic Paramorphism</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div>
+  <p>Algebra type:</p>
+  <pre language=haskell>
+
+> type Endo f a = f (FixA a f, FixA a f) -> FixA a f
+
+  </pre>
+  </div>
+  <div>
+  <p>Recursive endo-paramorphic traversal:</p>
+  <pre language=haskell class=signature>
+
+> endoA :: (Functor m, AnnIO a f m, Traversable f)
+>       => Endo f a -> FixA a f -> m (FixA a f)
+
+  </pre>
+  </div>
+  <div>
+  <p>Insert algebra:</p>
+  <pre language=haskell class=signature>
+
+> insert :: Ord v => v -> Endo (TreeF v) a
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!--
+
+> endoA = undefined
+> insert = undefined
+
+-->
+
 <!-- ====================================================================== -->
 
 <div class=slide>
@@ -36,46 +154,5 @@
 
 <!-- ====================================================================== -->
 
-<div class=slide>
-<header><h1>Annotatation type classes</h1><div class=slidenumber></div></header>
-<div class=body>
-  <div class=vindent>
-  <p>Modify a node inside an annotation.</p>
-  <pre language=haskell class=signature>
-
-> class (AnnOut a f m, AnnIn a f m) => AnnIO a f m where
->   annIO :: (f (FixA a f) -> m (f (FixA a f)))
->         -> FixA a f      -> m (FixA a f)
-
-  </pre>
-  </div>
-  <div>
-  <p>Default implementation performs unwrap/wrap:</p>
-  <pre language=haskell>
-
->   annIO f = annIn <=< f <=< annOut
-
-  </pre>
-  </div>
-</div>
-<footer></footer>
-</div>
-
-
-<!-- ====================================================================== -->
-
-<div class=slide>
-<header><h1>Debug trace annotation</h1><div class=slidenumber></div></header>
-<div class=body>
-  <div class=vindent>
-  <p>Annotation instances.</p>
-  <pre language=haskell>
-
-> instance (Functor f, Show (f ())) => AnnIO D f IO
-
-  </pre>
-  </div>
-</div>
-<footer></footer>
-</div>
+<!--#include virtual=more.html -->
 

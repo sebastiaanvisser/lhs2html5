@@ -41,7 +41,7 @@
   <p>Wrapped pointer annotation.</p>
   <pre language=haskell>
 
-> newtype P f a = P (Pointer (f a))
+> newtype P f a = P { unP :: Pointer (f a) }
 
   </pre>
   </div>
