@@ -39,7 +39,7 @@
   <p>User database as mapping from email to user.</p>
   <pre language=haskell>
 
-> type UserDB = Map Email User
+> type UserDB = Map Email User -- from Data.Map
 
   </pre>
   </div>
@@ -65,7 +65,7 @@
 >   let mail = email user in
 >   case M.lookup mail db of
 >     Nothing -> Right (M.insert mail user db)
->     Just _  -> Left "email already taken"
+>     Just _  -> Left "email in use"
 
   </pre>
   </div>
