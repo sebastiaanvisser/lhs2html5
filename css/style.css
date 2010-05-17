@@ -59,7 +59,8 @@ body, html
   color: #24a;
   text-decoration: none;
   background: #fff;
-  padding: 4px 4px;
+  padding: 0 8px;
+  -webkit-border-radius: 15px;
 }
 
 .slide .body pre
