@@ -36,9 +36,10 @@ data Tree v = Leaf | Branch v (Tree v) (Tree v)
   </pre>
   </div>
   <div>
-  <p>Example tree:</p>
-  <pre language=haskell>
+  <p>Example tree.</p>
+  <pre language=haskell class=signature>
 myTree :: Tree Int
+  </pre><pre language=haskell>
 myTree =
   Branch 3 (Branch 1 Leaf Leaf)
            (Branch 4 Leaf (Branch 7 Leaf Leaf))
@@ -124,20 +125,29 @@ myTree =
   <pre language=haskell class=signature>
 
 > leaf :: Tree v  -- Tree v ≡ Fix (TreeF v)
-> leaf = In Leaf
 
   </pre><pre language=haskell>
 
+> leaf = In Leaf
+
+  </pre><pre language=haskell class=signature>
+
 > branch :: v -> Tree v -> Tree v -> Tree v
+
+  </pre><pre language=haskell>
+
 > branch v l r = In (Branch v l r)
 
   </pre>
   </div>
   <div>
   <p>Example tree.</p>
-  <pre language=haskell>
+  <pre language=haskell class=signature>
 
 > myTree :: Tree Int
+
+  </pre><pre language=haskell>
+
 > myTree =
 >   branch 3 (branch 1 leaf leaf)
 >            (branch 4 leaf (branch 7 leaf leaf))
@@ -190,7 +200,7 @@ myTree =
   <p>Unwrap a single node from annotation.</p>
   <pre language=haskell>
 
-> class Monad m => Out a f m where
+> class Out a f m where
 >   outA :: FixA a f -> m (f (FixA a f))
 
   </pre>
@@ -199,7 +209,7 @@ myTree =
   <p>Wrap a single node in a fresh annotation.</p>
   <pre language=haskell>
 
-> class Monad m => In a f m where
+> class In a f m where
 >   inA :: f (FixA a f) -> m (FixA a f)
 
   </pre>
@@ -235,19 +245,19 @@ myTree =
 <div class=slide>
 <header><h1>Debug trace annotation</h1><div class=slidenumber></div></header>
 <div class=body>
-  <div class=vindent>
+  <div>
   <p>Annotation instances.</p>
   <pre language=haskell>
 
-> instance (Functor f, Show (f ()))
->       => Out Debug f IO where
->   outA (InA (D f)) = print ("Out", unit f) >> return f
+> instance (Functor f, Show (f ())) => Out Debug f IO
+>    where outA (InA (D f)) =
+>            print ("Out", unit f) >> return f
 
   </pre><pre language=haskell>
 
-> instance (Functor f, Show (f ()))
->       => In Debug f IO where
->   inA f = print ("In", unit f) >> return (InA (D f))
+> instance (Functor f, Show (f ())) => In Debug f IO
+>    where inA f =
+>            print ("In", unit f) >> return (InA (D f))
 
   </pre><pre language=haskell class=helper>
 
@@ -275,15 +285,21 @@ myTree =
   </div>
   <div>
   <p>Smart constructors.</p>
-  <pre language=haskell>
+  <pre language=haskell class=signature>
 
 > leafA :: In a (TreeF v) m => m (TreeA a v)
+
+  </pre><pre language=haskell>
+
 > leafA = inA Leaf
 
   </pre><pre language=haskell class=signature>
 
 > branchA :: In a (TreeF v) m
 >         => v -> TreeA a v -> TreeA a v -> m (TreeA a v)
+
+  </pre><pre language=haskell>
+
 > branchA v l r = inA (Branch v l r)
 
   </pre>
@@ -299,9 +315,13 @@ myTree =
 <div class=body>
   <div class=vindent>
   <p>Smart constructors.</p>
-  <pre language=haskell>
+  <pre language=haskell class=signature>
 
-> myTreeA :: In a (TreeF Int) m => m (TreeA a Int)
+> myTreeA :: (Monad m, In a (TreeF Int) m)
+>         -> m (TreeA a Int)
+
+  </pre><pre language=haskell>
+
 > myTreeA =
 >   do l <- leafA
 >      d <- branchA 7 l l
@@ -330,9 +350,12 @@ myTree =
 <div class=body>
   <div>
   <p>Smart constructors.</p>
-  <pre language=haskell>
+  <pre language=haskell class=signature>
 
 > myTreeD :: IO (TreeA Debug Int)
+
+  </pre><pre language=haskell>
+
 > myTreeD = myTreeA
 
   </pre>

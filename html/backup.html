@@ -39,7 +39,7 @@
   <p>Modify a node inside an annotation.</p>
   <pre language=haskell class=signature>
 
-> class (Out a f m, In a f m) => OutIn a f m where
+> class (Out a f m, In a f m, Monad m) => OutIn a f m where
 >   annIO :: (f (FixA a f) -> m (f (FixA a f)))
 >         -> FixA a f      -> m (FixA a f)
 

@@ -69,7 +69,7 @@
   <p>Corecursive anamorphic traversal:</p>
   <pre language=haskell class=signature>
 
-> anaA :: (In a f m, Traversable f)
+> anaA :: (In a f m, Monad m, Traversable f)
 >      => Coalg s f -> s -> m (FixA a f)
 
   </pre><pre language=haskell>
@@ -105,7 +105,7 @@
   <div>
   <pre language=haskell class=signature>
 
-> fromListA :: In a (TreeF v) m => [v] -> m (TreeA a v)
+> fromListA :: Monad m => In a (TreeF v) m => [v] -> m (TreeA a v)
 
   </pre><pre language=haskell>
 
@@ -169,7 +169,7 @@
   <p>Recursive catamorphic traversal:</p>
   <pre language=haskell class=signature>
 
-> cataA :: (Functor m, Out a f m, Traversable f)
+> cataA :: (Monad m, Functor m, Out a f m, Traversable f)
 >       => Alg f r -> FixA a f -> m r
 
   </pre><pre language=haskell>
@@ -206,7 +206,7 @@
   <div>
   <pre language=haskell class=signature>
 
-> lookupA :: (Ord k, Functor m, Out a (TreeF (k, v)) m)
+> lookupA :: (Ord k, Monad m, Functor m, Out a (TreeF (k, v)) m)
 >         => k -> TreeA a (k, v) -> m (Maybe v)
 
   </pre><pre language=haskell>

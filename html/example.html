@@ -110,12 +110,11 @@
   <p>A simplified binary tree, without key:</p>
   <pre language=haskell class=signature>
 
-> data Tree v =
->     Leaf
->   | Branch { value :: v
->            , left  :: Tree v
->            , right :: Tree v
->            }
+> data Tree v = Leaf | Branch
+>                    { value :: v
+>                    , left  :: Tree v
+>                    , right :: Tree v
+>                    }
 
   </pre>
   <pre language=haskell class=helper>
