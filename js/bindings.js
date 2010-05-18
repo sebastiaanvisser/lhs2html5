@@ -34,8 +34,10 @@ function setupKeyBindings ()
          case 48:  zoomReset()                              ; break
          case 115: $(".slidenumber").toggleClass("visible") ; break // s
          case 109: $("body").toggleClass("mouse")           ; break // m
+         case 113: makeBookmark()                           ; break // q
+         case 119: gotoBookmark()                           ; break // w
        }
-       // console.log(e.charCode)
+       console.log(e.charCode)
      })
 }
 

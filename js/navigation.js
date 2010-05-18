@@ -1,48 +1,27 @@
-function hideAllSlides ()
+function firstSlide    () { setCurrentSlide(0) }
+function lastSlide     () { setCurrentSlide(numberOfSlides - 1) }
+function prevSlide     () { if (getCurrentSlide() > 0) setCurrentSlide(getCurrentSlide() - 1) }
+function nextSlide     () { if (getCurrentSlide() < numberOfSlides - 1) setCurrentSlide(getCurrentSlide() + 1) }
+function slideFromHash () { setCurrentSlide(1 * (window.location.hash.slice(1) || 1) - 1) }
+
+function makeBookmark  () { bookmarks = getCurrentSlide() }
+function gotoBookmark  () { setCurrentSlide(bookmarks)    }
+
+
+function getCurrentSlide ()  { return currentSlide[0]  }
+function setCurrentSlide (i)
 {
+  if (i === undefined || i < 0 || i > numberOfSlides) return
+  currentSlide.unshift(i);
   $(".slide").css("display", "none")
-}
-
-function showCurrentSlide ()
-{
-  hideAllSlides()
-  $(".slide")[currentSlide].style.display = "block"
-  window.location.hash = (currentSlide + 1)
-}
-
-function firstSlide ()
-{
-  currentSlide = 0
-  showCurrentSlide()
-}
-
-function lastSlide ()
-{
-  currentSlide = numberOfSlides - 1
-  showCurrentSlide()
-}
-
-function prevSlide ()
-{
-  if (currentSlide > 0) currentSlide--
-  showCurrentSlide()
-}
-
-function nextSlide ()
-{
-  if (currentSlide < numberOfSlides - 1) currentSlide++
-  showCurrentSlide()
-}
-
-function slideNumberFromHash ()
-{
-  currentSlide = 1 * (window.location.hash.slice(1) || 1) - 1
-  showCurrentSlide()
+  $(".slide")[getCurrentSlide()].style.display = "block"
+  window.location.hash = (getCurrentSlide() + 1)
 }
 
 function setupNavigation ()
 {
-  window.currentSlide   = 0
+  window.currentSlide = [0]
+  window.bookmarks    = 0
   window.numberOfSlides = $(".slide").length
 }
 
