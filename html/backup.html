@@ -39,7 +39,7 @@
   <p>Modify a node inside an annotation.</p>
   <pre language=haskell class=signature>
 
-> class (AnnOut a f m, AnnIn a f m) => AnnIO a f m where
+> class (Out a f m, In a f m) => OutIn a f m where
 >   annIO :: (f (FixA a f) -> m (f (FixA a f)))
 >         -> FixA a f      -> m (FixA a f)
 
@@ -49,7 +49,7 @@
   <p>Default implementation performs unwrap/wrap:</p>
   <pre language=haskell>
 
->   annIO f = annIn <=< f <=< annOut
+>   annIO f = inA <=< f <=< outA
 
   </pre>
   </div>
@@ -57,7 +57,7 @@
   <p>Pointer instance.</p>
   <pre language=haskell class=signature>
 
-> instance Binary (f (FixA P f)) => AnnIO P f Heap
+> instance Binary (f (FixA P f)) => OutIn P f Heap
 >    where annIO g (InA (P f)) =
 >                InA . P <$> (write =<< g =<< fetch f)
 
@@ -69,7 +69,6 @@
   </pre>
   </div>
 </div>
-<footer></footer>
 </div>
 
 <!--
@@ -95,7 +94,7 @@
   <p>Recursive endo-paramorphic traversal:</p>
   <pre language=haskell class=signature>
 
-> endoA :: (Functor m, AnnIO a f m, Traversable f)
+> endoA :: (Functor m, OutIn a f m, Traversable f)
 >       => Endo f a -> FixA a f -> m (FixA a f)
 
   </pre>

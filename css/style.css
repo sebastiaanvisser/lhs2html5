@@ -9,7 +9,9 @@ body, html
   outline: none;
 }
 
-body.insert *
+body.insert .slide > *,
+body.insert .slide > * > *,
+body.insert .slide > * > * > *
 {
   outline: solid 1px #999;
 }

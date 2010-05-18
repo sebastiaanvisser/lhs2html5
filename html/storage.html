@@ -49,15 +49,15 @@
   <p>Unwrapping means reading from heap.</p>
   <pre language=haskell>
 
-> instance Binary (f (FixA P f)) => AnnOut P f Heap
->    where annOut (InA (P f)) = read f
+> instance Binary (f (FixA P f)) => Out P f Heap
+>    where outA (InA (P f)) = read f
 
   </pre>
   <p>Wrapping means writing to heap.</p>
   <pre language=haskell>
 
-> instance Binary (f (FixA P f)) => AnnIn P f Heap
->    where annIn f = InA . P <$> write f
+> instance Binary (f (FixA P f)) => In P f Heap
+>    where inA f = InA . P <$> write f
 
   </pre>
   </div>

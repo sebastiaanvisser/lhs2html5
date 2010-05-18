@@ -154,3 +154,28 @@ allocate ::             Integer   -> Heap (Pointer a)
 
 -->
 
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Binary type class</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class="vindent">
+  <p>Serialize to binary, deserialize from binary:</p>
+  <pre language=haskell>
+
+class Binary t where
+  put :: t -> Put
+  get :: Get t
+
+  </pre>
+  </div>
+  <div>
+  <p>From Hackage: binary + regular-extras.</p>
+  <pre language=haskell>
+import Data.Binary
+import Generics.Regular.Functions.Binary</pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+

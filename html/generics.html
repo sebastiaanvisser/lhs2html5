@@ -30,7 +30,7 @@
 <header><h1>Original Tree definition</h1><div class=slidenumber></div></header>
 <div class=body>
   <div class=vindent>
-  <p>Recall original <code>Tree v</code> datatype.</p>
+  <p>Recall the <code>Tree</code> datatype.</p>
   <pre language=haskell>
 data Tree v = Leaf | Branch v (Tree v) (Tree v)
   </pre>
@@ -190,8 +190,8 @@ myTree =
   <p>Unwrap a single node from annotation.</p>
   <pre language=haskell>
 
-> class Monad m => AnnOut a f m where
->   annOut :: FixA a f -> m (f (FixA a f))
+> class Monad m => Out a f m where
+>   outA :: FixA a f -> m (f (FixA a f))
 
   </pre>
   </div>
@@ -199,8 +199,8 @@ myTree =
   <p>Wrap a single node in a fresh annotation.</p>
   <pre language=haskell>
 
-> class Monad m => AnnIn a f m where
->   annIn :: f (FixA a f) -> m (FixA a f)
+> class Monad m => In a f m where
+>   inA :: f (FixA a f) -> m (FixA a f)
 
   </pre>
   </div>
@@ -216,7 +216,7 @@ myTree =
   <div class="vindent large">
   <pre language=haskell>
 
-> newtype D f a = D (f a)
+> newtype Debug f a = D (f a)
 
   </pre>
   </div>
@@ -240,14 +240,14 @@ myTree =
   <pre language=haskell>
 
 > instance (Functor f, Show (f ()))
->       => AnnOut D f IO where
->   annOut (InA (D f)) = print ("Out", unit f) >> return f
+>       => Out Debug f IO where
+>   outA (InA (D f)) = print ("Out", unit f) >> return f
 
   </pre><pre language=haskell>
 
 > instance (Functor f, Show (f ()))
->       => AnnIn D f IO where
->   annIn f = print ("In", unit f) >> return (InA (D f))
+>       => In Debug f IO where
+>   inA f = print ("In", unit f) >> return (InA (D f))
 
   </pre><pre language=haskell class=helper>
 
@@ -277,14 +277,14 @@ myTree =
   <p>Smart constructors.</p>
   <pre language=haskell>
 
-> leafA :: AnnIn a (TreeF v) m => m (TreeA a v)
-> leafA = annIn Leaf
+> leafA :: In a (TreeF v) m => m (TreeA a v)
+> leafA = inA Leaf
 
   </pre><pre language=haskell class=signature>
 
-> branchA :: AnnIn a (TreeF v) m
+> branchA :: In a (TreeF v) m
 >         => v -> TreeA a v -> TreeA a v -> m (TreeA a v)
-> branchA v l r = annIn (Branch v l r)
+> branchA v l r = inA (Branch v l r)
 
   </pre>
   </div>
@@ -301,7 +301,7 @@ myTree =
   <p>Smart constructors.</p>
   <pre language=haskell>
 
-> myTreeA :: AnnIn a (TreeF Int) m => m (TreeA a Int)
+> myTreeA :: In a (TreeF Int) m => m (TreeA a Int)
 > myTreeA =
 >   do l <- leafA
 >      d <- branchA 7 l l
@@ -332,7 +332,7 @@ myTree =
   <p>Smart constructors.</p>
   <pre language=haskell>
 
-> myTreeD :: IO (TreeA D Int)
+> myTreeD :: IO (TreeA Debug Int)
 > myTreeD = myTreeA
 
   </pre>
