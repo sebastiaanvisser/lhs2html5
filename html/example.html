@@ -108,7 +108,7 @@
   </div>
   <div>
   <p>A simplified binary tree, without key:</p>
-  <pre language=haskell>
+  <pre language=haskell class=signature>
 
 > data Tree v =
 >     Leaf
@@ -116,6 +116,11 @@
 >            , left  :: Tree v
 >            , right :: Tree v
 >            }
+
+  </pre>
+  <pre language=haskell class=helper>
+
+type Map k v = Tree (k, v) -- possible definition
 
   </pre>
   </div>
