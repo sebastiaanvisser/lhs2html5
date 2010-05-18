@@ -11,6 +11,9 @@
 >   , DeriveTraversable
 >   , KindSignatures
 >   , RankNTypes
+>   , GADTs
+>   , GeneralizedNewtypeDeriving
+>   , EmptyDataDecls
 >   #-}
 > module Backup where
 
@@ -150,6 +153,94 @@
   </div>
 </div>
 <footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Indexed datatypes</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div>
+  <p>Higher order annotated fixed point.</p>
+  <pre language=haskell class=signature>
+
+> data HFixA
+>     (a  :: ((* -> *) -> * -> *) -> (* -> *) -> * -> *)
+>     (f  ::  (* -> *) -> * -> *)
+>     (ix ::   *)
+>   = HInA { houta :: a f (HFixA a f) ix }
+
+  </pre>
+  </div>
+  <div>
+  <p>Higher order pointer annotation.</p>
+  <pre language=haskell>
+
+> newtype HP
+>         (f  :: (* -> *) -> * -> *)
+>         (b  ::  * -> *)
+>         (ix ::  *)
+>       = HP { unHP :: Pointer (f b ix) }
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<!--
+
+> data Z
+> data S c
+
+-->
+
+<div class=slide>
+<div class=body>
+  <div>
+  <pre language=haskell class=signature>
+
+> data Sp ; data Dg ; data Nd
+
+  </pre><pre language=haskell class=signature>
+
+> data FT (v :: *) (f :: * -> *) :: * -> * where
+>   Empty  ::                              FT v f (Sp, S c)
+>   Single :: f (Dg, S c)               -> FT v f (Sp, S c)
+>   Deep   :: f (Dg, S c)
+>          -> f (Sp, S (S c))           
+>          -> f (Dg, S c)               -> FT v f (Sp, S c)
+>   Digit1 :: f (Nd, c)                 -> FT v f (Dg, S c)
+>   Digit2 :: f (Nd, c) -> f (Nd, c)    -> FT v f (Dg, S c)
+>   Digit3 :: f (Nd, c) -> f (Nd, c)    
+>          -> f (Nd, c)                 -> FT v f (Dg, S c)
+>   Digit4 :: f (Nd, c) -> f (Nd, c)    
+>          -> f (Nd, c) -> f (Nd, c)    -> FT v f (Dg, S c)
+>   Node2  :: f (Nd, c) -> f (Nd, c)    -> FT v f (Nd, S c)
+>   Node3  :: f (Nd, c) -> f (Nd, c)    
+>          -> f (Nd, c)                 -> FT v f (Nd, S c)
+>   Value  :: v                         -> FT v f (Nd, Z)
+
+  </pre><pre language=haskell class=signature>
+
+> type FingerTreeP v = HFixA HP (FT v) (Sp, S Z)
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<div class=slide>
+<div class=body>
+  <div>
+  <center>
+  <img class=tall src=img/fingertree.pdf>
+  </center>
+  </div>
+</div>
 </div>
 
 <!-- ====================================================================== -->
