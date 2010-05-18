@@ -9,6 +9,11 @@ body, html
   outline: none;
 }
 
+body.insert *
+{
+  outline: solid 1px #999;
+}
+
 .slide
 {
   background: #e0e0e0;
