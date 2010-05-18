@@ -1,3 +1,10 @@
+function action (msg)
+{
+  $(".action").html(msg)
+  $(".action").css("opacity", "1.0")
+  setTimeout(function () { $(".action").css("opacity", "0.0") }, 600);
+}
+
 function setupKeyBindings ()
 {
   $(document).keydown
@@ -7,10 +14,10 @@ function setupKeyBindings ()
 
        switch (e.keyCode)
        {
-         case 37: prevSlide()  ; break
-         case 39: nextSlide()  ; break
-         case 36: firstSlide() ; break
-         case 35: lastSlide()  ; break
+         case 37: prevSlide()  ; /* action("previous") */ ; break
+         case 39: nextSlide()  ; /* action("next")     */ ; break
+         case 36: firstSlide() ; action("first")          ; break
+         case 35: lastSlide()  ; action("last")           ; break
        }
      })
 
@@ -20,6 +27,7 @@ function setupKeyBindings ()
        if (e.charCode == 105) // i
        {
          $("body").toggleClass("insert")
+         action("edit")
          return
        }
 
@@ -27,15 +35,15 @@ function setupKeyBindings ()
 
        switch (e.charCode)
        {
-         case 91:  prevSlide()                              ; break
-         case 93:  nextSlide()                              ; break
-         case 45:  zoomOut()                                ; break
-         case 61:  zoomIn()                                 ; break
-         case 48:  zoomReset()                              ; break
-         case 115: $(".slidenumber").toggleClass("visible") ; break // s
-         case 109: $("body").toggleClass("mouse")           ; break // m
-         case 113: makeBookmark()                           ; break // q
-         case 119: gotoBookmark()                           ; break // w
+         case 91:  prevSlide()                              ; action("previous")             ; break
+         case 93:  nextSlide()                              ; action("next")                 ; break
+         case 45:  zoomOut()                                ; action("zoom out")             ; break
+         case 61:  zoomIn()                                 ; action("zoom in")              ; break
+         case 48:  zoomReset()                              ; action("zoom all")             ; break
+         case 115: $(".slidenumber").toggleClass("visible") ; action("toggle slidenumber")   ; break // s
+         case 109: $("body").toggleClass("mouse")           ; action("toggle mouse")         ; break // m
+         case 113: makeBookmark()                           ; action("bookmarked")           ; break // q
+         case 119: gotoBookmark()                           ; action("goto bookmark")        ; break // w
        }
        console.log(e.charCode)
      })

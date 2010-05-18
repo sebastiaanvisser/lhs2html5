@@ -16,6 +16,11 @@ body.insert .slide > * > * > *
   outline: solid 1px #999;
 }
 
+.action
+{
+  color: white;
+}
+
 .slide
 {
   background: #e0e0e0;

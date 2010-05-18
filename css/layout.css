@@ -27,7 +27,7 @@ body.insert .slide
 
 .slide
 {
-  -webkit-transition: opacity  0.4s linear;
+  -webkit-transition: opacity 0.4s;
   page-break-before: always;
   page-break-after:  always;
 
@@ -40,6 +40,20 @@ body.insert .slide
   width: 1024px;
   top: 0px;
   height: 768px;
+}
+
+.action
+{
+  z-index: 200px;
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  background: rgba(0,0,0, 0.8);
+  padding: 5px 20px;
+  -webkit-border-radius: 20px;
+  -webkit-box-shadow: 0 0 10px black;
+  -webkit-transition: opacity 0.6s;
+  opacity: 0.0;
 }
 
 /* ----------------------------- */
