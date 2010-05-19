@@ -160,45 +160,49 @@
 
 <!-- ====================================================================== -->
 
-<!--
-
-> type Web a = IO a
-> getPostVar :: String -> IO String
-> getPostVar = undefined
-
--->
-
 <div class=slide>
-<header><h1>Example, use it as state</h1><div class=slidenumber></div></header>
+<header><h1>State monad</h1><div class=slidenumber></div></header>
 <div class=body>
-  <div>
-  <pre language=haskell class=signature>
-
-> main :: IO ()
-
-  </pre>
-  <pre language=haskell>
-
-> main = evalStateT doSignups Leaf
-
-  </pre>
-  </div>
-  <div>
+  <div class=vindent>
   <p>Run operations in state monad.</p>
   <pre language=haskell class=signature>
 
-> doSignups :: StateT UserDB IO ()
+> doSignups :: Int -> StateT UserDB IO ()
 
   </pre><pre language=haskell>
 
-> doSignups = 
+> doSignups 0 = return ()
+> doSignups i = 
 >   do mail <- liftIO getLine
 >      pass <- liftIO getLine
 >      db   <- get
 >      case signup db (User mail pass) of
 >        Left  err -> liftIO (print err)
 >        Right db' -> put db'
->      return ()
+>      doSignups (i - 1)
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>And then?</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <pre language=haskell class=signature>
+
+main :: IO ()
+
+  </pre>
+  <pre language=haskell>
+
+main =
+  do db <- execStateT (doSignups 4) Leaf
+     ... -- what to do with db?
 
   </pre>
   </div>
@@ -209,6 +213,10 @@
 <!-- ====================================================================== -->
 
 <!--
+
+> type Web a = IO a
+> getPostVar :: String -> IO String
+> getPostVar = undefined
 
 > signupHandler :: TVar UserDB -> Web String
 > signupHandler dbVar =
