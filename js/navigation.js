@@ -4,9 +4,19 @@ function prevSlide     () { if (getCurrentSlide() > 0) setCurrentSlide(getCurren
 function nextSlide     () { if (getCurrentSlide() < numberOfSlides - 1) setCurrentSlide(getCurrentSlide() + 1) }
 function slideFromHash () { setCurrentSlide(1 * (window.location.hash.slice(1) || 1) - 1) }
 
-function makeBookmark  () { bookmarks = getCurrentSlide() }
-function gotoBookmark  () { setCurrentSlide(bookmarks)    }
+function makeBookmark  () { bookmarks.unshift(getCurrentSlide()) }
+function gotoBookmark  () { setCurrentSlide(bookmarks.shift())    }
 
+function gotoBookmarkN (n)
+{
+  makeBookmark()
+  $(".slide").each(
+    function (i)
+    {
+      if ($(this).attr("id") == "bookmark" + n)
+        setCurrentSlide(i)
+    })
+}
 
 function getCurrentSlide ()  { return currentSlide[0]  }
 function setCurrentSlide (i)
@@ -21,7 +31,7 @@ function setCurrentSlide (i)
 function setupNavigation ()
 {
   window.currentSlide = [0]
-  window.bookmarks    = 0
+  window.bookmarks    = []
   window.numberOfSlides = $(".slide").length
 }
 
