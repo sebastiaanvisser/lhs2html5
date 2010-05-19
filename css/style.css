@@ -1,6 +1,5 @@
 body, html
 {
-  xbackground: black;
   background: #eee;
 }
 
@@ -27,6 +26,11 @@ body.insert .slide > * > * > *
   -webkit-border-bottom-left-radius: 5px;
   -webkit-border-bottom-right-radius: 5px;
   overflow: hidden;
+}
+
+.print .slide
+{
+  background: white;
 }
 
 .slide h1
@@ -82,6 +86,13 @@ body.insert .slide > * > * > *
   -webkit-border-radius: 2px;
   x-webkit-border-top-right-radius: 30px;
 }
+
+.print .slide .body pre
+{
+  background: #eee;
+  -webkit-box-shadow: none;
+}
+
 
 .slide .body pre em
 {
