@@ -74,9 +74,7 @@ body.insert .slide > * > * > *
 {
   color: #24a;
   text-decoration: none;
-  background: #fff;
-  padding: 0 8px;
-  -webkit-border-radius: 15px;
+  background: #eee;
 }
 
 .slide .body pre

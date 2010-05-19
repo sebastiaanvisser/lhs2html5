@@ -17,14 +17,15 @@
 >   #-}
 > module Backup where
 
-> import Data.Traversable
 > import Control.Applicative
 > import Control.Monad hiding (mapM)
 > import Control.Monad.State hiding (mapM)
-> import Prelude hiding (read, mapM)
 > import Data.Binary hiding (get)
-> import Heap
+> import Data.Traversable
+> import Example
 > import Generics
+> import Heap
+> import Prelude hiding (read, mapM, lookup)
 > import Storage
 > import qualified Data.Map as M
 
@@ -73,15 +74,12 @@ mapM :: Monad m => (a -> m b) -> f a -> m (f b)
   <p>Modify a node inside an annotation.</p>
   <pre language=haskell class=signature>
 
-> class (Out a f m, In a f m, Monad m) => OutIn a f m where
+> class (Out a f m, In a f m, Monad m)
+>    => OutIn a f m where
 >   annIO :: (f (FixA a f) -> m (f (FixA a f)))
 >         -> FixA a f      -> m (FixA a f)
 
-  </pre>
-  </div>
-  <div>
-  <p>Default implementation performs unwrap/wrap:</p>
-  <pre language=haskell>
+  </pre><pre language=haskell>
 
 >   annIO f = inA <=< f <=< outA
 
@@ -291,7 +289,7 @@ mapM :: Monad m => (a -> m b) -> f a -> m (f b)
   <pre language=haskell>
 
 > authenticate db user = 
->   case M.lookup (email user) db of
+>   case lookup (email user) db of
 >     Just (User _ p) | p == password user -> True
 >     _                                    -> False
 

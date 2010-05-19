@@ -2,9 +2,7 @@
 
 > module Example where
 
-> import Data.Map (Map)
 > import Prelude hiding (lookup)
-> import qualified Data.Map as M
 > import Control.Concurrent.STM
 
 -->
@@ -34,38 +32,17 @@
 >               }
 
   </pre>
+<!--
+
+>   deriving (Eq, Ord)
+
+-->
   </div>
   <div>
   <p>User database as mapping from email to user.</p>
   <pre language=haskell>
 
 > type UserDB = Map Email User -- from Data.Map
-
-  </pre>
-  </div>
-</div>
-<footer></footer>
-</div>
-
-<!-- ====================================================================== -->
-
-<div class=slide>
-<header><h1>Example, performing a signup</h1><div class=slidenumber></div></header>
-<div class=body>
-  <div class=vindent>
-  <p>Add a new user to a database, the email address must be unique.</p>
-  <pre language=haskell class=signature>
-
-> signup :: UserDB -> User -> Either String UserDB
-
-  </pre>
-  <pre language=haskell>
-
-> signup db user = 
->   let mail = email user in
->   case M.lookup mail db of
->     Nothing -> Right (M.insert mail user db)
->     Just _  -> Left "email in use"
 
   </pre>
   </div>
@@ -94,7 +71,7 @@
   </pre>
   <pre language=haskell class=helper>
 
-type Map k v = Tree (k, v) -- possible definition
+> type Map k v = Tree (k, v) -- possible definition
 
   </pre>
   </div>
@@ -147,6 +124,32 @@ type Map k v = Tree (k, v) -- possible definition
 >           EQ -> Branch v l r
 >           GT -> Branch w l (insert v r)
 > insert v Leaf = Branch v Leaf Leaf
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Example, performing a signup</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Add a new user to a database, the email address must be unique.</p>
+  <pre language=haskell class=signature>
+
+> signup :: UserDB -> User -> Either String UserDB
+
+  </pre>
+  <pre language=haskell>
+
+> signup db user = 
+>   let mail = email user in
+>   case lookup mail db of
+>     Nothing -> Right (insert (mail, user) db)
+>     Just _  -> Left "email in use"
 
   </pre>
   </div>
