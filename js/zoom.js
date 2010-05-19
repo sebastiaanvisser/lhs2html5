@@ -1,13 +1,13 @@
-function zoomIn ()
+function zoomIn (p)
 {
   var z = new Number($(".slide").css("zoom"))
-  $(".slide").css("zoom", (1 * z) + 0.01)
+  $(".slide").css("zoom", (1 * z) + (p ? 0.1 : 0.01))
 }
 
-function zoomOut ()
+function zoomOut (p)
 {
   var z = new Number($(".slide").css("zoom"))
-  $(".slide").css("zoom", (1 * z) - 0.01)
+  $(".slide").css("zoom", (1 * z) - (p ? 0.1 : 0.01))
 }
 
 function zoomReset ()

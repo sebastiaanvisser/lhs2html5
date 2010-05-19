@@ -46,8 +46,10 @@ function setupKeyBindings ()
          case 93:  nextSlide()                              ; action("next")                 ; break // ]
          case  8:  prevSlide()                              ;                                ; break // backspace
          case 32:  nextSlide()                              ;                                ; break // space
-         case 45:  zoomOut()                                ; action("zoom out")             ; break // -
-         case 61:  zoomIn()                                 ; action("zoom in")              ; break // +
+         case 45:  zoomOut(false)                           ; action("zoom out")             ; break // -
+         case 95:  zoomOut(true)                            ; action("zoom OUT")             ; break // _
+         case 61:  zoomIn(false)                            ; action("zoom in")              ; break // +
+         case 43:  zoomIn(true)                             ; action("zoom IN")              ; break // =
          case 48:  zoomReset()                              ; action("zoom all")             ; break // 0
          case 115: $(".slidenumber").toggleClass("visible") ; action("toggle slidenumber")   ; break // s
          case 109: $("body").toggleClass("mouse")           ; action("toggle mouse")         ; break // m
@@ -56,7 +58,7 @@ function setupKeyBindings ()
          case 112: $("body").toggleClass("print")           
                    $("body").toggleClass("noprint")         ; action("print mode")           ; break
        }
-       // console.log(e.charCode)
+       console.log(e)
      })
 }
 
