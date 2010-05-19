@@ -45,6 +45,8 @@ function setupKeyBindings ()
 
          case 91:  prevSlide()                              ; action("previous")             ; break
          case 93:  nextSlide()                              ; action("next")                 ; break
+         case  8:  prevSlide()                              ;                                ; break
+         case 32:  nextSlide()                              ;                                ; break
          case 45:  zoomOut()                                ; action("zoom out")             ; break
          case 61:  zoomIn()                                 ; action("zoom in")              ; break
          case 48:  zoomReset()                              ; action("zoom all")             ; break
