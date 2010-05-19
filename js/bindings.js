@@ -14,8 +14,8 @@ function setupKeyBindings ()
 
        switch (e.keyCode)
        {
-         case 37: prevSlide()  ; /* action("previous") */ ; break
-         case 39: nextSlide()  ; /* action("next")     */ ; break
+         case 37: prevSlide()  ;                          ; break
+         case 39: nextSlide()  ;                          ; break
          case 36: firstSlide() ; action("first")          ; break
          case 35: lastSlide()  ; action("last")           ; break
        }
@@ -42,18 +42,19 @@ function setupKeyBindings ()
          case 53:  gotoBookmarkN(5)                         ; action("bookmark #5")          ; break
          case 54:  gotoBookmarkN(6)                         ; action("bookmark #6")          ; break
          case 55:  gotoBookmarkN(7)                         ; action("bookmark #7")          ; break
-
-         case 91:  prevSlide()                              ; action("previous")             ; break
-         case 93:  nextSlide()                              ; action("next")                 ; break
-         case  8:  prevSlide()                              ;                                ; break
-         case 32:  nextSlide()                              ;                                ; break
-         case 45:  zoomOut()                                ; action("zoom out")             ; break
-         case 61:  zoomIn()                                 ; action("zoom in")              ; break
-         case 48:  zoomReset()                              ; action("zoom all")             ; break
+         case 91:  prevSlide()                              ; action("previous")             ; break // [
+         case 93:  nextSlide()                              ; action("next")                 ; break // ]
+         case  8:  prevSlide()                              ;                                ; break // backspace
+         case 32:  nextSlide()                              ;                                ; break // space
+         case 45:  zoomOut()                                ; action("zoom out")             ; break // -
+         case 61:  zoomIn()                                 ; action("zoom in")              ; break // +
+         case 48:  zoomReset()                              ; action("zoom all")             ; break // 0
          case 115: $(".slidenumber").toggleClass("visible") ; action("toggle slidenumber")   ; break // s
          case 109: $("body").toggleClass("mouse")           ; action("toggle mouse")         ; break // m
          case 113: makeBookmark()                           ; action("push")                 ; break // q
          case 119: gotoBookmark()                           ; action("pop")                  ; break // w
+         case 112: $("body").toggleClass("print")           
+                   $("body").toggleClass("noprint")         ; action("print mode")           ; break
        }
        // console.log(e.charCode)
      })

@@ -28,18 +28,34 @@ body.insert .slide
 .slide
 {
   -webkit-transition: opacity 0.4s;
-  page-break-before: always;
-  page-break-after:  always;
-
-  xdisplay: none;
   zoom: 1.00;
+}
 
+.noprint .slide
+{
   overflow: hidden;
   position: absolute;
   left: 0px;
   width: 1024px;
   top: 0px;
   height: 768px;
+}
+
+.print .slide
+{
+  page-break-before: always;
+  page-break-after:  always;
+  position: normal;
+}
+
+.slide
+{
+  display: block;
+}
+
+.noprint .slide.hidden
+{
+  display: none;
 }
 
 .action

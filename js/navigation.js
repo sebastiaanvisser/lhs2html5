@@ -23,8 +23,8 @@ function setCurrentSlide (i)
 {
   if (i === undefined || i < 0 || i > numberOfSlides) return
   currentSlide.unshift(i);
-  $(".slide").css("display", "none")
-  $(".slide")[getCurrentSlide()].style.display = "block"
+  $(".slide").addClass("hidden") // css("display", "none")
+  $($(".slide").get(getCurrentSlide())).removeClass("hidden") //].style.display = "block"
   window.location.hash = (getCurrentSlide() + 1)
 }
 
