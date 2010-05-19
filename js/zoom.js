@@ -34,6 +34,8 @@ function autoZoom ()
 
   var zoom = w1/resolution[0]
   $(".slide > *").css("zoom", zoom)
+
+  $(".slide footer").css("margin-top", (h1 / 2) + "px")
 }
       
 function setupResizing ()

@@ -113,10 +113,6 @@ body.insert .slide
 {
   padding: 10px 20px;
   text-align: right;
-}
-
-.slide footer
-{
   position: absolute;
   bottom: 0px;
   left: 0px;
