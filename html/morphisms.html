@@ -105,7 +105,8 @@
   <div>
   <pre language=haskell class=signature>
 
-> fromListA :: Monad m => In a (TreeF v) m => [v] -> m (TreeA a v)
+> fromListA :: (Monad m, In a (TreeF v) m)
+>           => [v] -> m (TreeA a v)
 
   </pre><pre language=haskell>
 
@@ -141,8 +142,8 @@
 ("In",Leaf)
 ("In",Branch (3,9) () ())
 ("In",Branch (1,1) () ())
-<span style=color:#080>{D (Branch (1,1) {D (Branch (2,4) {D Leaf} {D Leaf})}
-                 {D (Branch (3,9) {D Leaf} {D Leaf})})}</span></pre>
+<em>{D (Branch (1,1) {D (Branch (2,4) {D Leaf} {D Leaf})}</em>
+<em>                 {D (Branch (3,9) {D Leaf} {D Leaf})})}</em></pre>
   </div>
 
 </div>
@@ -206,7 +207,8 @@
   <div>
   <pre language=haskell class=signature>
 
-> lookupA :: (Ord k, Monad m, Functor m, Out a (TreeF (k, v)) m)
+> lookupA :: ( Monad m, Functor m
+>            , Ord k, Out a (TreeF (k, v)) m)
 >         => k -> TreeA a (k, v) -> m (Maybe v)
 
   </pre><pre language=haskell>

@@ -273,5 +273,30 @@ mapM :: Monad m => (a -> m b) -> f a -> m (f b)
 
 <!-- ====================================================================== -->
 
+<div class=slide>
+<header><h1>Example, authenticate a user</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <p>Does the database contain a user with the right email and password?</p>
+  <pre language=haskell class=signature>
+
+> authenticate :: UserDB -> User -> Bool
+
+  </pre>
+  <pre language=haskell>
+
+> authenticate db user = 
+>   case M.lookup (email user) db of
+>     Just (User _ p) | p == password user -> True
+>     _                                    -> False
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
 <!--#include virtual=more.html -->
 

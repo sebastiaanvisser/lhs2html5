@@ -76,31 +76,6 @@
 <!-- ====================================================================== -->
 
 <div class=slide>
-<header><h1>Example, authenticate a user</h1><div class=slidenumber></div></header>
-<div class=body>
-  <div class=vindent>
-  <p>Does the database contain a user with the right email and password?</p>
-  <pre language=haskell class=signature>
-
-> authenticate :: UserDB -> User -> Bool
-
-  </pre>
-  <pre language=haskell>
-
-> authenticate db user = 
->   case M.lookup (email user) db of
->     Just (User _ p) | p == password user -> True
->     _                                    -> False
-
-  </pre>
-  </div>
-</div>
-<footer></footer>
-</div>
-
-<!-- ====================================================================== -->
-
-<div class=slide>
 <header><h1>Map as binary tree</h1><div class=slidenumber></div></header>
 <div class=body>
   <div class=vindent>
@@ -130,32 +105,6 @@ type Map k v = Tree (k, v) -- possible definition
 <!-- ====================================================================== -->
 
 <div class=slide>
-<header><h1>Insertion into binary tree</h1><div class=slidenumber></div></header>
-<div class=body>
-  <div class=vindent>
-  <pre language=haskell class=signature>
-
-> insert :: Ord v => v -> Tree v -> Tree v
-
-  </pre>
-  <pre language=haskell>
-
-> insert v (Branch w l r) =
->   case v `compare` w of
->           LT -> Branch w (insert v l) r
->           EQ -> Branch v l r
->           GT -> Branch w l (insert v r)
-> insert v Leaf = Branch v Leaf Leaf
-
-  </pre>
-  </div>
-</div>
-<footer></footer>
-</div>
-
-<!-- ====================================================================== -->
-
-<div class=slide>
 <header><h1>Lookup on binary tree</h1><div class=slidenumber></div></header>
 <div class=body>
   <div class=vindent>
@@ -172,6 +121,32 @@ type Map k v = Tree (k, v) -- possible definition
 >           EQ -> Just v
 >           GT -> lookup k r
 > lookup _ Leaf = Nothing
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<div class=slide>
+<header><h1>Insertion into binary tree</h1><div class=slidenumber></div></header>
+<div class=body>
+  <div class=vindent>
+  <pre language=haskell class=signature>
+
+> insert :: Ord v => v -> Tree v -> Tree v
+
+  </pre>
+  <pre language=haskell>
+
+> insert v (Branch w l r) =
+>   case v `compare` w of
+>           LT -> Branch w (insert v l) r
+>           EQ -> Branch v l r
+>           GT -> Branch w l (insert v r)
+> insert v Leaf = Branch v Leaf Leaf
 
   </pre>
   </div>

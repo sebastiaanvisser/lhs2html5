@@ -176,6 +176,6 @@ body.insert .slide
   margin-bottom: 10px;
 }
 
-.slide .body .vindent { margin-top:  80px; }
-.slide .body .hindent { margin-left: 80px; }
+.slide .body .vindent { margin-top:  60px; }
+.slide .body .hindent { margin-left: 60px; }
 
