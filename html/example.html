@@ -4,6 +4,7 @@
 
 > import Prelude hiding (lookup)
 > import Control.Concurrent.STM
+> import Control.Monad.State
 
 -->
 
@@ -168,17 +169,48 @@
 -->
 
 <div class=slide>
-<header><h1>Example, web application</h1><div class=slidenumber></div></header>
+<header><h1>Example, use it as state</h1><div class=slidenumber></div></header>
 <div class=body>
-  <div class=vindent>
-  <p>Get post data out of web environment and try signup.</p>
+  <div>
   <pre language=haskell class=signature>
 
-> signupHandler :: TVar UserDB -> Web String
+> main :: IO ()
 
   </pre>
   <pre language=haskell>
 
+> main = evalStateT doSignups Leaf
+
+  </pre>
+  </div>
+  <div>
+  <p>Run operations in state monad.</p>
+  <pre language=haskell class=signature>
+
+> doSignups :: StateT UserDB IO ()
+
+  </pre><pre language=haskell>
+
+> doSignups = 
+>   do mail <- liftIO getLine
+>      pass <- liftIO getLine
+>      db   <- get
+>      case signup db (User mail pass) of
+>        Left  err -> liftIO (print err)
+>        Right db' -> put db'
+>      return ()
+
+  </pre>
+  </div>
+</div>
+<footer></footer>
+</div>
+
+<!-- ====================================================================== -->
+
+<!--
+
+> signupHandler :: TVar UserDB -> Web String
 > signupHandler dbVar =
 >   do mail <- getPostVar "email"
 >      pass <- getPostVar "password"
@@ -189,11 +221,5 @@
 >             Right db' -> do writeTVar dbVar db'
 >                             return "signup ok"
 
-  </pre>
-  </div>
-</div>
-<footer></footer>
-</div>
-
-<!-- ====================================================================== -->
+-->
 
