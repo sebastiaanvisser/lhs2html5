@@ -21,6 +21,7 @@ function setupHighlighting (prefix)
           , data: node.text()
           , success: insert
           , dataType: "html"
+          , async: false // to make symbol replacement kick in on time
           })
      })
 }
