@@ -1,4 +1,4 @@
-function setupHighlighting ()
+function setupHighlighting (prefix)
 {
   $("pre[language]").each
     (function ()
@@ -17,11 +17,10 @@ function setupHighlighting ()
 
        jQuery.ajax
          ({ type: "PUT"
-          , url: "highlight/" + node.attr("language")
+          , url: prefix + "highlight/" + node.attr("language")
           , data: node.text()
           , success: insert
           , dataType: "html"
-          , async: false
           })
      })
 }

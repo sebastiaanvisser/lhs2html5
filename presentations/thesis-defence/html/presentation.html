@@ -3,16 +3,19 @@
 <title>Persistent Data Structures in Haskell</title>
 <meta http-equiv=Content-Type content=text/html;charset=utf-8>
 <meta charset=utf-8>
-<link rel=stylesheet href=css/layout.css type=text/css media=all>
-<link rel=stylesheet href=css/font.css   type=text/css media=all>
-<link rel=stylesheet href=css/style.css  type=text/css media=all>
-<link rel=stylesheet href=css/code.css   type=text/css media=all>
-<script type=text/javascript src=3rd/jquery-1.4.2.js></script>
-<script src=js/navigation.js></script>
-<script src=js/zoom.js></script>
-<script src=js/highlight.js></script>
-<script src=js/bindings.js></script>
-<script src=js/symbols.js></script>
+
+<link rel=stylesheet href=../../css/layout.css type=text/css media=all>
+<link rel=stylesheet href=../../css/font.css   type=text/css media=all>
+<link rel=stylesheet href=../../css/style.css  type=text/css media=all>
+<link rel=stylesheet href=../../css/code.css   type=text/css media=all>
+
+<script src=../../3rd/jquery-1.4.2.js></script>
+<script src=../../js/navigation.js></script>
+<script src=../../js/zoom.js></script>
+<script src=../../js/highlight.js></script>
+<script src=../../js/bindings.js></script>
+<script src=../../js/symbols.js></script>
+<script src=../../js/utils.js></script>
 
 <body class=noprint>
 
@@ -36,17 +39,17 @@
 $("footer").each(
   function ()
   {
-    if (!$(this).html())
-      $(this).html("Persistent Data Structures in Haskell - Sebastiaan Visser");
+    if (!$(this).html()) $(this).html("Persistent Data Structures in Haskell - Sebastiaan Visser");
   }
 )
 </script>
 
 <script>
 var resolution = [1024,766]
+fillElement("footer", "AApjes")
 setupNavigation()
 setupResizing()
-setupHighlighting()
+setupHighlighting("../../")
 setupSymbolReplacement()
 setupKeyBindings()
 setupMouseBindings()
