@@ -30,7 +30,7 @@ body.insert .slide > * > * > *
 
 .print .slide
 {
-  background: white;
+  xbackground: white;
 }
 
 .slide h1
@@ -80,9 +80,8 @@ body.insert .slide > * > * > *
 .slide .body pre
 {
   background: white;
-  -webkit-box-shadow: 1px 1px 10px rgba(0,0,0, 0.1);
-  -webkit-border-radius: 2px;
-  x-webkit-border-top-right-radius: 30px;
+  -webkit-box-shadow: 1px 1px 10px rgba(0,0,0, 0.3);
+  -webkit-border-radius: 4px;
 }
 
 .print .slide .body pre
@@ -111,5 +110,23 @@ body.insert .slide > * > * > *
 {
   xbackground: white;
   color: #00a;
+}
+
+
+.slide .body pre.cmd
+{
+  background: #141428;
+  color: white;
+  text-shadow: 1px 1px 5px rgba(0,0,0, 0.7);
+}
+
+.slide .body pre.cmd .prompt
+{
+  color: lime;
+}
+
+.slide .body pre.cmd .input
+{
+  color: #7bf;
 }
 

@@ -1,12 +1,12 @@
 .action
 {
-  font-family: "Alte Haas Grotesk";
+  font-family: "Alte Haas Grotesk", Helvetica;
   font-size: 30px;
 }
 
 .slide h1
 {
-  font-family: "Alte Haas Grotesk";
+  font-family: "Alte Haas Grotesk", Helvetica;
   font-weight: normal;
   font-size: 60px;
 }
@@ -23,14 +23,19 @@
 
 .slide.titlepage .author
 {
-  font-family: "Alte Haas Grotesk";
+  font-family: "Alte Haas Grotesk", Helvetica;
+  font-size: 35px;
+}
+
+.slide.titlepage .email
+{
   font-size: 30px;
 }
 
 .slide .slidenumber,
 .slide footer
 {
-  font-family: "Alte Haas Grotesk";
+  font-family: "Alte Haas Grotesk", Helvetica;
 }
 
 .slide .slidenumber { font-size: 20px; }
@@ -39,7 +44,7 @@
 .slide .body
 {
   font-size: 30px;
-  font-family: "Alte Haas Grotesk";
+  font-family: "Alte Haas Grotesk", Helvetica;
 }
 
 .slide .body pre
