@@ -1,6 +1,5 @@
 Options +Includes +ExecCGI +FollowSymLinks +Indexes
 RewriteEngine on
-RewriteRule highlight/(.*) ./server/server.cgi [L]
-AddHandler cgi-script .cgi
+AddHandler cgi-script .cgi .lhs
 AddHandler server-parsed .html
 AddDefaultCharset utf-8
