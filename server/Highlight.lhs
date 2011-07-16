@@ -20,7 +20,7 @@ Read the query string for the request language to highlight.
 
 Highlight and return the input code.
 
->      code <- {- preprocess <$> -} hGetContents stdin
+>      code <- preprocess <$> hGetContents stdin
 >      pipeString [("/usr/bin/illuminate", ["--syntax=" ++ lang, "--to=htmlcss"])] code
 >        >>= putStrLn
 
