@@ -6,7 +6,7 @@ function setupSymbolReplacement ()
       var sym = $(this)
       switch (sym.text())
       {
-        case "->": sym.text("→"); padding(sym,2,3,3,0); roman(sym);  break
+        case "->": sym.text("→"); padding(sym,3,4,3,0); roman(sym);  break
         case "<-": sym.text("←"); padding(sym,2,3,3,0); roman(sym);  break
         case "==": sym.text("≡"); padding(sym,8,7,0,0);              break
         case "=>": sym.text("⇒"); padding(sym,3,4,0,0); myriad(sym); break
@@ -16,15 +16,36 @@ function setupSymbolReplacement ()
       }
     }
   )
+}
+
+function setupKeywordReplacement ()
+{
   $(".VarId").each(
     function (e)
     {
       var sym = $(this)
       switch (sym.text())
       {
-        // case "a": sym.text("α"); padding(sym,-2,-1,0,0);            break
-        // case "b": sym.text("β"); padding(sym,-1,0,0,0);             break
-        case "forall": keyword(sym);             break
+        case "forall"    : sym.text("∀"); keyword(sym); break
+        case "undefined" : sym.text("⊥"); keyword(sym); break
+      }
+    }
+  )
+}
+
+function setupIdentifierReplacement ()
+{
+  $(".VarId").each(
+    function (e)
+    {
+      var sym = $(this)
+      switch (sym.text())
+      {
+        case "a": sym.text("α"); padding(sym,-2,-1,0,0); break
+        case "b": sym.text("β"); padding(sym,-1,0,0,0);  break
+        case "g": sym.text("γ"); padding(sym,-1,0,0,0);  break
+        case "d": sym.text("δ"); padding(sym,-1,0,0,0);  break
+        case "e": sym.text("ε"); padding(sym,-1,0,0,0);  break
       }
     }
   )        
