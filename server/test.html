@@ -45,7 +45,7 @@ function post ()
   window.localStorage["highlight"] = $("textarea").val();
   $.ajax
     ({ type        : "POST"
-     , url         : "echo.cgi?" + $("input").val()
+     , url         : "highlight.cgi?" + $("input").val()
      , data        : $("textarea").val()
      , contentType : "text/plain; charset=utf-8"
      , success     : render

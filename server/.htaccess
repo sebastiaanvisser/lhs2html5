@@ -1,5 +1,5 @@
 Options +Includes +ExecCGI +FollowSymLinks +Indexes
 RewriteEngine on
-AddHandler cgi-script .cgi .lhs
+AddHandler cgi-script .cgi
 AddHandler server-parsed .html
 AddDefaultCharset utf-8
