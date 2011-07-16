@@ -7,17 +7,19 @@ function setupHighlighting (prefix)
 
        function insert (code)
        {
-         node.html(code)
+         var html = document.createElement("div");
+         html.innerHTML = code;
+         node.html($("pre", html)[0].innerHTML)
 
          // Remove additional PRE.
-         var pre = $(node).children("pre")
-         while (pre[0].childNodes.length) node[0].appendChild(pre[0].childNodes[0])
-         pre.remove()
+         // var pre = $(node).children("pre")
+         // while (pre[0].childNodes.length) node[0].appendChild(pre[0].childNodes[0])
+         // pre.remove()
        }
 
        jQuery.ajax
-         ({ type: "PUT"
-          , url: prefix + "highlight/" + node.attr("language")
+         ({ type: "POST"
+          , url: prefix + "?" + node.attr("language")
           , data: node.text()
           , success: insert
           , dataType: "html"
