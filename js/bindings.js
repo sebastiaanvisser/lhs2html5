@@ -57,12 +57,12 @@ function setupKeyBindings ()
          case 43:  zoomIn(true)                                  ; action("zoom IN")              ; break // =
          case 48:  zoomReset()                                   ; action("zoom all")             ; break // 0
          case 115: $(".slidenumber").toggleClass("visible")      ; action("toggle slidenumber")   ; break // s
-         case 113: window.resizeTo(resolution[0], 24+ resolution[1]) ; action("native size")          ; break // q
+         case 114: window.resizeTo(resolution[0], 24+ resolution[1]) ; action("native size")          ; break // r
          case 109: $("body").toggleClass("mouse")                ; action("toggle mouse")         ; break // m
          case 113: makeBookmark()                                ; action("push")                 ; break // q
          case 119: gotoBookmark()                                ; action("pop")                  ; break // w
          case 112: $("body").toggleClass("print")                
-                   $("body").toggleClass("noprint")              ; action("print mode")           ; break
+                   $("body").toggleClass("noprint")              ; action("print mode")           ; break // p
        }
        console.log(e)
      })
