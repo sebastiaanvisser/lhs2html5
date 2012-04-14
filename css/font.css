@@ -62,8 +62,29 @@
 .slide .body .large
 {
   font-size: 40px;
+  line-height: 60px;
 }
 
-.slide .body pre.large  { font-size: 35px; }
-.slide .body .large pre { font-size: 35px; }
+.slide .body pre.large,
+.slide .body .large pre
+{
+  font-size: 35px;
+  line-height: 50px;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.slide .body .scream
+{
+  font-size: 50px;
+  line-height: 80px;
+  text-align: center;
+}
+
+.slide h1.scream
+{
+  padding-top: 80px;
+  font-size: 100px;
+  text-align: center;
+}
 

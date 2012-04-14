@@ -95,6 +95,7 @@ body.insert .slide
 .slide.titlepage .email
 {
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .slide header .slidenumber
@@ -155,7 +156,6 @@ body.insert .slide
 .slide .body .large pre
 {
   xpadding: 20px 30px;
-  line-height: 52px;
 }
 
 .slide .body pre
