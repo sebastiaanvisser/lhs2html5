@@ -2,7 +2,8 @@
 
 > import Control.Applicative
 > import Data.Char
-> import System.Process.Pipe
+> import Data.List
+> import System.Process
 > import System.IO
 > import System.Environment
 
@@ -16,13 +17,18 @@ Print the HTTP header.
 
 Read the query string for the request language to highlight.
 
->      lang <- validLanguages <$> getEnv "QUERY_STRING"
+>      lang <- maybe "haskell" validLanguages . lookup "QUERY_STRING" <$> getEnvironment
 
 Highlight and return the input code.
 
 >      code <- preprocess <$> hGetContents stdin
->      pipeString [("/usr/bin/illuminate", ["--syntax=" ++ lang, "--to=htmlcss"])] code
->        >>= putStrLn
+>      res <- readProcess "illuminate" ["--syntax=" ++ lang, "--to=htmlcss"] code
+
+Write the output.
+
+>      print code
+>      putStrLn res
+>      hFlush stdout
 
 This function removes all empty lines from the beginning and end of the code,
 removes all bird-style tags from the beginning of a line and removes and
@@ -30,13 +36,13 @@ outdents the code block to the first column.
 
 > preprocess :: String -> String
 > preprocess cd =
->   let allSpace    = and . map isSpace
+>   let allSpace    = all isSpace
 >       bothSides f = reverse . f . reverse . f
 >       trimmed     = bothSides (dropWhile allSpace) (lines cd)
 >       nobirds     = map (dropWhile (=='>')) trimmed
->       spaces      = minimum (map (length . takeWhile isSpace) nobirds)
+>       spaces      = minimum (filter (/= 0) $ map (length . takeWhile isSpace) nobirds)
 >       outdented   = map (drop spaces) nobirds
->   in unlines outdented
+>   in intercalate "\n" outdented
 
 A white list based validator of known languages.
 
