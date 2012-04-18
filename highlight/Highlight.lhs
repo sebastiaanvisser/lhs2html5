@@ -42,7 +42,18 @@ outdents the code block to the first column.
 >       nobirds     = map (dropWhile (=='>')) trimmed
 >       spaces      = minimum (filter (/= 0) $ map (length . takeWhile isSpace) nobirds)
 >       outdented   = map (drop spaces) nobirds
->   in intercalate "\n" outdented
+>       dropDoubles = nubWith (\a b -> allSpace a && a == b) outdented
+>   in intercalate "\n" dropDoubles
+
+Helper function to eliminate consecutive items under certain conditions.
+
+> nubWith :: (a -> a -> Bool) -> [a] -> [a]
+> nubWith f = go
+>  where
+>     go []                   = []
+>     go [x]                  = [x]
+>     go (x:y:xs) | f x y     = go (y:xs)
+>                 | otherwise = x : go (y:xs)
 
 A white list based validator of known languages.
 

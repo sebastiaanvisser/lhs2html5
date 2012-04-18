@@ -1,18 +1,30 @@
 function setupSymbolReplacement ()
 {
-  $(".Symbol").each(
+  $("pre[language]").each(
+    function (_, e)
+    {
+      for (var i = 0; i < e.childNodes.length; i++)
+      {
+        var node = e.childNodes[i];
+        if (node.nodeType != 3) continue;
+        node.textContent = node.textContent.replace("''", "”");
+      }
+    }
+  )
+
+  $("pre[language] .Symbol").each(
     function (e)
     {
       var sym = $(this)
       switch (sym.text())
       {
-        case "->": sym.text("→"); padding(sym,3,4,3,0); roman(sym);  break
-        case "<-": sym.text("←"); padding(sym,2,3,3,0); roman(sym);  break
-        case "==": sym.text("≡"); padding(sym,8,7,0,0);              break
-        case "=>": sym.text("⇒"); padding(sym,3,4,0,0); myriad(sym); break
+        case "->"  : sym.text("→"); padding(sym,3,4,3,0); roman(sym);  break
+        case "<-"  : sym.text("←"); padding(sym,2,3,3,0); roman(sym);  break
+        case "=="  : sym.text("≡"); padding(sym,8,7,0,0);              break
+        case "=>"  : sym.text("⇒"); padding(sym,3,4,0,0); myriad(sym); break
         // case "." : sym.text("∘"); padding(sym,3,4,0,0); lucida(sym); break
-        case "::": sym.text("∷"); padding(sym,8,7,0,0);              break
-        case "$" : sym.text("$");                       myriad(sym); break
+        case "::"  : sym.text("∷"); padding(sym,8,7,0,0);              break
+        case "$"   : sym.text("$");                       myriad(sym); break
       }
     }
   )

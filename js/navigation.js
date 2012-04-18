@@ -21,10 +21,19 @@ function gotoBookmarkN (n)
 function getCurrentSlide ()  { return currentSlide[0]  }
 function setCurrentSlide (i)
 {
+  // Remove previous data-body-class.
+  var slide = $(".slide").get(getCurrentSlide());
+  $(document.body).removeClass($(slide).attr("data-body-class") || "-");
+
   if (i === undefined || i < 0 || i > numberOfSlides) return
   currentSlide.unshift(i);
-  $(".slide").addClass("hidden") // css("display", "none")
-  $($(".slide").get(getCurrentSlide())).removeClass("hidden") //].style.display = "block"
+  $(".slide").addClass("hidden")
+  var slide = $(".slide").get(getCurrentSlide());
+
+  // Add current data-body-class.
+  $(document.body).addClass($(slide).attr("data-body-class"));
+
+  $(slide).removeClass("hidden")
   window.location.hash = (getCurrentSlide() + 1)
 }
 
