@@ -40,13 +40,13 @@ function setupKeyBindings ()
 
        switch (e.charCode)
        {
-         case 49:  gotoBookmarkN(1)                              ; action("bookmark #1")          ; break
-         case 50:  gotoBookmarkN(2)                              ; action("bookmark #2")          ; break
-         case 51:  gotoBookmarkN(3)                              ; action("bookmark #3")          ; break
-         case 52:  gotoBookmarkN(4)                              ; action("bookmark #4")          ; break
-         case 53:  gotoBookmarkN(5)                              ; action("bookmark #5")          ; break
-         case 54:  gotoBookmarkN(6)                              ; action("bookmark #6")          ; break
-         case 55:  gotoBookmarkN(7)                              ; action("bookmark #7")          ; break
+//         case 49:  gotoBookmarkN(1)                              ; action("bookmark #1")          ; break
+//         case 50:  gotoBookmarkN(2)                              ; action("bookmark #2")          ; break
+//         case 51:  gotoBookmarkN(3)                              ; action("bookmark #3")          ; break
+//         case 52:  gotoBookmarkN(4)                              ; action("bookmark #4")          ; break
+//         case 53:  gotoBookmarkN(5)                              ; action("bookmark #5")          ; break
+//         case 54:  gotoBookmarkN(6)                              ; action("bookmark #6")          ; break
+//         case 55:  gotoBookmarkN(7)                              ; action("bookmark #7")          ; break
          case 91:  prevSlide()                                   ; action("previous")             ; break // [
          case 93:  nextSlide()                                   ; action("next")                 ; break // ]
          case  8:  prevSlide()                                   ;                                ; break // backspace
@@ -61,8 +61,8 @@ function setupKeyBindings ()
          case 110: window.resizeTo(resolution[0], resolution[1]) ; action("native size")          ; break // n
          case 113: makeBookmark()                                ; action("push")                 ; break // q
          case 119: gotoBookmark()                                ; action("pop")                  ; break // w
-         case 112: $("body").toggleClass("print")                
-                   $("body").toggleClass("noprint")              ; action("print mode")           ; break // p
+         case  80: $("body").toggleClass("print")
+                   $("body").toggleClass("noprint")              ; action("print mode")           ; break // P
        }
        console.log(e)
      })

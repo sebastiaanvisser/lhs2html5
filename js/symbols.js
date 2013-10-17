@@ -30,6 +30,20 @@ function setupSymbolReplacement ()
   )
 }
 
+function setupSymbolHighlighting ()
+{
+  $("pre[language] .Symbol").each(
+    function (e)
+    {
+      var sym = $(this)
+      switch (sym.text())
+      {
+        case "=>"  : sym.addClass("fat-arrow"); break
+      }
+    }
+  )
+}
+
 function setupKeywordReplacement ()
 {
   $(".VarId").each(
