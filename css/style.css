@@ -24,7 +24,13 @@ body.insert .slide > * > * > *
 {
   background: #e0e0e0;
   -webkit-border-bottom-left-radius: 5px;
+  -moz-border-bottom-left-radius: 5px;
+  -ie-border-bottom-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   -webkit-border-bottom-right-radius: 5px;
+  -moz-border-bottom-right-radius: 5px;
+  -ie-border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 5px;
   overflow: hidden;
 }
 
@@ -44,6 +50,9 @@ body.insert .slide > * > * > *
   top: 10px;
   right: 10px;
   -webkit-transition: 1s opacity;
+  -moz-transition: 1s opacity;
+  -ie-transition: 1s opacity;
+  transition: 1s opacity;
 }
 
 .slide footer
@@ -81,13 +90,22 @@ body.insert .slide > * > * > *
 {
   background: white;
   -webkit-box-shadow: 1px 1px 10px rgba(0,0,0, 0.3);
+  -moz-box-shadow: 1px 1px 10px rgba(0,0,0, 0.3);
+  -ie-box-shadow: 1px 1px 10px rgba(0,0,0, 0.3);
+  box-shadow: 1px 1px 10px rgba(0,0,0, 0.3);
   -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ie-border-radius: 4px;
+  border-radius: 4px;
 }
 
 .print .slide .body pre
 {
   background: #eee;
   -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -ie-box-shadow: none;
+  box-shadow: none;
 }
 
 
@@ -100,6 +118,9 @@ body.insert .slide > * > * > *
 {
   background: #eeeeee;
   -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -ie-box-shadow: none;
+  box-shadow: none;
 }
 
 .slide .body img
